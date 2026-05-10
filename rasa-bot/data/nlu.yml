@@ -1,0 +1,105 @@
+version: "3.1"
+
+nlu:
+- intent: greet
+  examples: |
+    - hola
+    - holaaa
+    - buenas
+    - buenos días
+    - buenas tardes
+    - buenas noches
+    - qué onda
+    - hey
+    - hola bot
+    - hola habitmind
+    - hola asistente
+
+- intent: goodbye
+  examples: |
+    - adiós
+    - hasta luego
+    - nos vemos
+    - bye
+    - gracias, eso es todo
+    - luego hablamos
+    - ya terminé, gracias
+
+- intent: affirm
+  examples: |
+    - sí
+    - claro
+    - por supuesto
+    - me parece bien
+    - suena bien
+    - ok
+    - de acuerdo
+
+- intent: deny
+  examples: |
+    - no
+    - nah
+    - mejor no
+    - todavía no
+    - no quiero
+    - creo que no
+
+- intent: mood_great
+  examples: |
+    - me siento muy bien
+    - ando motivado
+    - estoy feliz
+    - todo va muy bien
+    - hoy estoy con mucha energía
+
+- intent: mood_unhappy
+  examples: |
+    - me siento mal
+    - ando desmotivado
+    - estoy triste
+    - hoy no tengo ganas de nada
+    - siento que no avanzo
+
+- intent: ask_habit_help
+  examples: |
+    - quiero crear un nuevo hábito
+    - ayúdame a crear un hábito
+    - quiero mejorar mis hábitos
+    - quiero empezar a ser más constante
+    - quiero organizar mis hábitos
+    - no sé cómo empezar un hábito
+    - quiero trabajar en mis hábitos
+
+- intent: provide_habit_info
+  examples: |
+    - quiero crear un hábito para [leer](habit_name)
+    - quiero empezar a [leer libros](habit_name)
+    - me gustaría [hacer ejercicio](habit_name)
+    - quiero formar el hábito de [tomar más agua](habit_name)
+    - quiero empezar a [estudiar inglés](habit_name) diario
+    - quiero crear el hábito de [meditar](habit_name)
+    - quiero [dejar de usar el celular](habit_name) en la noche
+    - quiero hacer el hábito de [salir a caminar](habit_name)
+
+- intent: ask_progress
+  examples: |
+    - cómo voy con mis hábitos
+    - siento que no avanzo con mis hábitos
+    - no estoy siendo constante
+    - me estoy atrasando con lo que quiero lograr
+    - quiero mejorar mi progreso
+    - quiero revisar mi progreso
+
+- intent: bot_challenge
+  examples: |
+    - eres un bot
+    - eres humano
+    - qué eres
+    - quién eres
+    - hablo con una persona real
+
+- intent: nlu_fallback
+  examples: |
+    - asdasd asdasd
+    - qwe qwe qwe
+    - texto sin sentido

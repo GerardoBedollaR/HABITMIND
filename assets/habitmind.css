@@ -1,0 +1,1551 @@
+/* ================================
+   HabitMind – Estilos generales
+   ================================ */
+
+:root {
+  --hm-blue: #2563eb;
+  --hm-blue-soft: #e5f0ff;
+  --hm-blue-hero: #e8f4ff;
+  --hm-green: #22c55e;
+  --hm-green-soft: #e6fbe9;
+  --hm-orange: #fb923c;
+  --hm-yellow: #facc15;
+  --hm-red: #ef4444;
+  --hm-dark: #111827;
+  --hm-gray-700: #374151;
+  --hm-gray-600: #4b5563;
+  --hm-gray-500: #6b7280;
+  --hm-gray-300: #d1d5db;
+  --hm-gray-100: #f3f4f6;
+  --hm-bg-body: #f2f5ff;
+  --hm-bg-footer: #020617;
+  --hm-radius-lg: 18px;
+  --hm-radius-xl: 24px;
+  --hm-shadow-soft: 0 10px 25px rgba(15, 23, 42, 0.12);
+}
+
+/* Reset básico */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--hm-bg-body);
+  color: var(--hm-dark);
+}
+
+/* =======================================
+   Layout – páginas públicas / landing
+   ======================================= */
+
+.hm-landing-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header público */
+.hm-header-public {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 10px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hm-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hm-logo-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 20%, #f97316, #ec4899);
+}
+
+/* Texto del logo en el header */
+.hm-logo-text {
+    font-size: 26px;            /* Antes 20–22px. Ahora +5px aprox */
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    color: #2fafeb;             /* Azul tipo mockup (#1D4ED8 = azul Tailwind) */
+    display: flex;
+    align-items: center;
+}
+
+
+.hm-nav-public {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.hm-nav-link {
+  font-size: 14px;
+  color: var(--hm-gray-700);
+  text-decoration: none;
+  padding: 6px 0;
+  position: relative;
+}
+
+.hm-nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 2px;
+  background: var(--hm-blue);
+  transition: width 0.2s ease;
+}
+
+.hm-nav-link:hover::after {
+  width: 100%;
+}
+
+.hm-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hm-btn-small-outline {
+  border-radius: 999px;
+  border: 1px solid var(--hm-blue);
+  padding: 6px 16px;
+  font-size: 13px;
+  background: #ffffff;
+  color: var(--hm-blue);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.hm-btn-small-outline:hover {
+  background: var(--hm-blue-soft);
+}
+
+.hm-btn-cta {
+  border-radius: 999px;
+  border: none;
+  padding: 8px 20px;
+  font-size: 14px;
+  background: #10b981;
+  color: #ffffff;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 10px 25px rgba(16, 185, 129, 0.45);
+}
+
+.hm-btn-cta:hover {
+  background: #059669;
+}
+
+/* HERO */
+.hm-landing-main {
+  flex: 1;
+  padding: 32px 40px 50px;
+}
+
+.hm-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  gap: 32px;
+  align-items: center;
+  background: linear-gradient(135deg, #e5f0ff, #f9fbff);
+  border-radius: 24px;
+  padding: 32px 32px 24px;
+  box-shadow: var(--hm-shadow-soft);
+  margin-bottom: 40px;
+}
+
+.hm-hero-title {
+  font-size: 32px;
+  line-height: 1.15;
+  margin-bottom: 14px;
+  color: var(--hm-dark);
+}
+
+.hm-hero-title span {
+  color: #1d4ed8;
+}
+
+.hm-hero-text {
+  font-size: 15px;
+  color: var(--hm-gray-600);
+  max-width: 420px;
+  margin-bottom: 20px;
+}
+
+.hm-hero-buttons {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.hm-btn,
+.hm-btn-outline {
+  border-radius: 999px;
+  padding: 10px 22px;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4);
+}
+
+.hm-btn {
+  background: var(--hm-blue);
+  color: #ffffff;
+}
+
+.hm-btn:hover {
+  background: #1d4ed8;
+}
+
+.hm-btn-outline {
+  background: #111827;
+  color: #ffffff;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.35);
+}
+
+.hm-btn-outline:hover {
+  background: #020617;
+}
+
+.hm-hero-badges {
+  font-size: 12px;
+  color: var(--hm-gray-500);
+}
+
+.hm-hero-mockup {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    padding: 40px 80px;
+    min-height: 430px;
+    background: linear-gradient(to bottom, #dff0ff, #eaf3ff);
+}
+
+
+.hm-hero-illustration {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end; /* manda la imagen a la derecha */
+    align-items: center;
+}
+
+.hm-hero-illustration img {
+    width: 330px;
+    height: auto;
+    object-fit: contain;
+}
+
+
+
+.hm-hero-illustration-inner {
+  width: 260px;
+  height: 260px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 20%, #bfdbfe, #dbeafe);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: var(--hm-gray-700);
+}
+
+/* Beneficios */
+.hm-section-title {
+  text-align: center;
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+.hm-benefits {
+  margin-bottom: 40px;
+}
+
+.hm-benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.hm-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 18px 18px 20px;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.1);
+  text-align: center;
+}
+
+.hm-card-icon {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.hm-card-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.hm-card-text {
+  font-size: 13px;
+  color: var(--hm-gray-600);
+}
+
+/* Testimonios */
+.hm-testimonials {
+  margin-bottom: 34px;
+}
+
+.hm-testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.hm-testimonial-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 16px 16px 18px;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+  font-size: 13px;
+}
+
+.hm-testimonial-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.hm-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #60a5fa, #a855f7);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.hm-testimonial-name {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.hm-testimonial-text {
+  font-size: 13px;
+  color: var(--hm-gray-700);
+}
+
+.hm-landing-cta {
+  text-align: center;
+  font-size: 13px;
+}
+
+/* ================== FOOTER ================== */
+
+.hm-footer {
+  background: #020617;           /* negro casi puro como el mockup */
+  color: #e5e7eb;
+  padding: 18px 40px;
+  font-size: 13px;
+}
+
+.hm-footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+/* IZQUIERDA: logo + links */
+.hm-footer-left {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.hm-footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hm-footer-logo {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+.hm-footer-brand-text {
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  font-size: 14px;
+  color: #22d3ee;               /* azul/cyan como el mockup */
+}
+
+.hm-footer-divider {
+  width: 1px;
+  align-self: stretch;
+  background: rgba(148, 163, 184, 0.7);
+  margin: 0 6px;
+}
+
+.hm-footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hm-footer-links a {
+  color: #e5e7eb;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.hm-footer-links a:hover {
+  color: #38bdf8;
+}
+
+/* CENTRO: copyright */
+.hm-footer-center {
+  flex: 1;
+  text-align: center;
+  color: #9ca3af;
+  font-size: 13px;
+}
+
+/* DERECHA: redes sociales */
+.hm-footer-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.hm-footer-social img {
+  width: 42px;        /* tamaño cercano al mockup */
+  height: 42px;
+  display: block;
+}
+
+/* Versión responsive: cuando la pantalla es pequeña, apila todo */
+@media (max-width: 900px) {
+  .hm-footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .hm-footer-center {
+    text-align: left;
+    width: 100%;
+    order: 3;
+  }
+
+  .hm-footer-right {
+    order: 2;
+  }
+}
+
+
+/* =======================================
+   Layout – páginas de app (dashboard)
+   ======================================= */
+
+.hm-app-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.hm-app-main {
+  flex: 1;
+  padding: 20px 38px 32px;
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 22px;
+}
+
+/* Header app */
+.hm-header-app {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 10px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hm-header-app-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hm-header-app-menu {
+  display: flex;
+  gap: 20px;
+  font-size: 14px;
+}
+
+.hm-header-app-menu a {
+  text-decoration: none;
+  color: var(--hm-gray-700);
+}
+
+.hm-header-app-menu a:hover {
+  color: var(--hm-blue);
+}
+
+.hm-header-app-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hm-config-pill {
+  padding: 7px 16px;
+  border-radius: 999px;
+  background: #e0f2fe;
+  font-size: 13px;
+  cursor: pointer;
+  border: 1px solid #bfdbfe;
+}
+
+.hm-btn-logout {
+  border-radius: 999px;
+  padding: 8px 18px;
+  border: none;
+  background: var(--hm-red);
+  color: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(239, 68, 68, 0.4);
+}
+
+/* Sidebar */
+.hm-sidebar {
+  background: #f9fbff;
+  border-radius: var(--hm-radius-xl);
+  padding: 16px 16px 20px;
+  box-shadow: var(--hm-shadow-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.hm-sidebar-header {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.hm-sidebar-search {
+  margin-bottom: 10px;
+}
+
+.hm-sidebar-search .hm-input {
+  width: 100%;
+  border-radius: 999px;
+  border-color: #e5e7eb;
+  font-size: 13px;
+}
+
+.hm-sidebar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.hm-habit-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hm-habit-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+}
+
+.hm-sidebar-add {
+  font-size: 13px;
+  color: var(--hm-blue);
+  cursor: pointer;
+}
+
+.hm-sidebar-progress-btn {
+  margin-top: auto;
+  padding: 10px 12px;
+  border-radius: var(--hm-radius-lg);
+  background: #22c55e;
+  color: #ffffff;
+  font-size: 13px;
+  text-align: center;
+}
+
+/* Contenido principal app */
+.hm-app-content {
+  background: #f9fbff;
+  border-radius: var(--hm-radius-xl);
+  padding: 18px 20px 22px;
+  box-shadow: var(--hm-shadow-soft);
+}
+
+.hm-chat-header {
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.hm-chat-timestamp {
+  font-size: 11px;
+  color: var(--hm-gray-500);
+  margin-bottom: 12px;
+}
+
+/* ===========================
+   Chat HabitMind (REST)
+   =========================== */
+
+/* Contenedor del chat (tarjeta) */
+.hm-chat-section {
+  margin-top: 8px;
+}
+
+.hm-chat-window {
+  background: #f6fbff;
+  border-radius: 24px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  height: 380px;           /* Alto fijo del chat */
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+/* Área que contiene los mensajes */
+.hm-chat-log {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+/* Mensajes */
+.hm-chat-msg {
+  max-width: 80%;
+  margin-bottom: 10px;
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.hm-chat-msg p {
+  margin: 2px 0 0 0;
+}
+
+.hm-chat-author {
+  display: block;
+  font-size: 11px;
+  opacity: 0.7;
+  margin-bottom: 2px;
+}
+
+/* Mensaje del bot */
+.hm-chat-bot {
+  background: #dcfce7;
+  color: #111827;
+  border-radius: 999px;
+}
+
+/* Mensaje del usuario */
+.hm-chat-user {
+  background: #ffffff;
+  color: #111827;
+  margin-left: auto;
+  border-radius: 999px;
+}
+
+/* Input + botón (la barra de abajo) */
+.hm-chat-input-area {
+  margin-top: 12px;
+  background: #ffffff;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  padding: 4px 10px;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+}
+
+.hm-chat-input-area input {
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 13px;
+}
+
+.hm-chat-send {
+  font-size: 20px;
+  margin-left: 8px;
+  cursor: pointer;
+}
+
+/* Inputs generales */
+.hm-input {
+  border-radius: 12px;
+  border: 1px solid #d1d5db;
+  padding: 8px 10px;
+  font-size: 13px;
+  outline: none;
+  transition: border 0.15s ease, box-shadow 0.15s ease;
+  background: #ffffff;
+}
+
+.hm-input:focus {
+  border-color: var(--hm-blue);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+}
+
+/* Progreso diario */
+.hm-progreso-title {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.hm-progreso-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) 220px;
+  gap: 16px;
+}
+
+.hm-progreso-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 12px 14px 16px;
+  margin-bottom: 12px;
+  font-size: 12px;
+}
+
+/* Dashboard general */
+.hm-dashboard-grid {
+  display: grid;
+  grid-template-columns: 2fr 1.4fr;
+  gap: 18px;
+}
+
+/* ===========================
+   Login / tarjetas genéricas
+   =========================== */
+
+.hm-login-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.hm-login-main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 32px 16px;
+}
+
+.hm-login-card {
+  max-width: 380px;
+  width: 100%;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 22px 22px 24px;
+  box-shadow: var(--hm-shadow-soft);
+}
+
+.hm-login-title {
+  font-size: 20px;
+  margin-bottom: 6px;
+}
+
+.hm-login-subtitle {
+  font-size: 13px;
+  color: var(--hm-gray-600);
+  margin-bottom: 18px;
+}
+
+.hm-form-group {
+  margin-bottom: 12px;
+}
+
+.hm-form-group label {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.hm-btn-full {
+  width: 100%;
+  border-radius: 999px;
+  padding: 9px 0;
+  border: none;
+  background: var(--hm-blue);
+  color: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.4);
+}
+
+.hm-btn-full:hover {
+  background: #1d4ed8;
+}
+
+.hm-alert {
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.hm-alert-error {
+  background: #fee2e2;
+  border: 1px solid #ef4444;
+  color: #b91c1c;
+}
+
+.hm-alert-success {
+  background: #dcfce7;
+  border: 1px solid #22c55e;
+  color: #166534;
+}
+
+/* ===========================
+   Ajustes misceláneos
+   =========================== */
+
+.hm-user-pill {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #eef2ff;
+  font-size: 12px;
+}
+
+/* Botón pequeño de salida (si lo reutilizas en otros lados) */
+.hm-btn-small-danger {
+  border-radius: 999px;
+  padding: 6px 14px;
+  border: none;
+  background: var(--hm-red);
+  color: #ffffff;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.hm-btn-danger {
+  background: #ff5252;
+  color: #ffffff;
+  box-shadow: 0 10px 25px rgba(255, 82, 82, 0.5);
+}
+
+.hm-btn-danger:hover {
+  background: #e64444;
+}
+
+/* Tablas en dashboard (si las usas) */
+.hm-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-top: 8px;
+}
+
+.hm-table th,
+.hm-table td {
+  padding: 8px 10px;
+  text-align: left;
+}
+
+.hm-table thead {
+  background: #e5edff;
+}
+
+.hm-table tbody tr:nth-child(even) {
+  background: #f9fafb;
+}
+
+/* ===========================
+   Responsive básico
+   =========================== */
+
+@media (max-width: 992px) {
+  .hm-hero,
+  .hm-login-top,
+  .hm-app-main,
+  .hm-progreso-grid,
+  .hm-dashboard-grid,
+  .hm-benefits-grid,
+  .hm-testimonials-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hm-app-main {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* =====================================================
+   AJUSTES DE LA LANDING PARA QUE PAREZCA AL MOCKUP
+   (sobrescriben reglas anteriores solo en la portada)
+   ===================================================== */
+
+/* Fondo general tipo gradiente azul claro */
+.hm-landing-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(
+    180deg,
+    #cfe7ff 0%,
+    #e5f0ff 40%,
+    #f5f6fb 70%,
+    #f8f9fb 100%
+  );
+}
+
+/* Header más limpio y plano como el mockup */
+.hm-header-public {
+  background: transparent;
+  border-bottom: none;
+  padding: 10px 40px 16px;
+}
+
+/* Zona central centrada, con ancho máximo */
+.hm-landing-main {
+  flex: 1;
+  max-width: 1180px;
+  margin: 0 auto 40px;
+  padding: 0 20px 40px;
+}
+
+/* Hero más grande y parecido al diseño */
+.hm-hero {
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.9fr);
+  gap: 40px;
+  align-items: center;
+  background: linear-gradient(135deg, #dbeafe, #e5f0ff);
+  border-radius: 24px;
+  padding: 36px 40px 28px;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+}
+
+/* Título grande como en el mockup */
+.hm-hero-title {
+  font-size: 38px;
+  line-height: 1.08;
+  margin-bottom: 14px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+/* Texto debajo del título, más suave */
+.hm-hero-text {
+  flex: 1;
+  font-size: 15px;
+  color: #374151;
+  max-width: 460px;
+  margin-bottom: 24px;
+}
+
+/* Botones principales del hero */
+.hm-hero-buttons {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+/* Botón azul "Comenzar ahora" */
+.hm-btn {
+  background: #2f80ff;
+  color: #ffffff;
+  border-radius: 999px;
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 12px 26px rgba(47, 128, 255, 0.55);
+}
+
+.hm-btn:hover {
+  background: #1d6fe6;
+}
+
+/* Botón oscuro "Explorar" */
+.hm-btn-outline {
+  border-radius: 999px;
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  background: #020617;
+  color: #ffffff;
+  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.55);
+}
+
+/* Texto pequeño bajo los botones (si lo usas) */
+.hm-hero-badges {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+/* Ilustración del lado derecho un poco más grande */
+.hm-hero-illustration-inner {
+  width: 280px;
+  height: 280px;
+}
+
+/* Sección de beneficios como una banda gris clara */
+.hm-benefits {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  background: #f3f4f6;
+  border-radius: 24px;
+  padding: 30px 26px 34px;
+}
+
+/* Título centrado de “Beneficios de HabitMind” */
+.hm-section-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Tarjetas de beneficios */
+.hm-benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.hm-card {
+  background: #ffffff;
+  border-radius: 22px;
+  padding: 18px 18px 20px;
+  box-shadow: 0 14px 28px rgba(15, 23, 42, 0.12);
+  text-align: center;
+}
+
+.hm-card-icon {
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+.hm-card-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.hm-card-text {
+  font-size: 12px;
+  color: #4b5563;
+}
+
+/* Testimonios / historias de éxito, estilo parecido */
+.hm-testimonials {
+  margin-top: 10px;
+  margin-bottom: 36px;
+}
+
+.hm-testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.hm-testimonial-card {
+  background: #ffffff;
+  border-radius: 22px;
+  padding: 16px 16px 18px;
+  box-shadow: 0 14px 28px rgba(15, 23, 42, 0.12);
+  font-size: 12px;
+}
+
+
+
+/* ===============================
+   FIX HEADER LANDING TIPO MOCKUP
+   =============================== */
+
+.hm-header-public {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  background: transparent;
+  border-bottom: none;
+  padding: 12px 48px 18px;
+}
+
+/* Logo + texto de marca a la izquierda */
+.hm-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Menú centrado entre logo y botones */
+.hm-nav-public {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-left: 40px;
+}
+
+.hm-nav-link {
+  font-size: 14px;
+  color: #111827;
+  text-decoration: none;
+  padding: 4px 0;
+  position: relative;
+}
+
+/* Botones a la derecha del todo */
+.hm-nav-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Botón "Iniciar sesión" pequeño */
+.hm-btn-small-outline {
+  border-radius: 999px;
+  border: 1px solid #1d4ed8;
+  padding: 7px 18px;
+  font-size: 13px;
+  background: #ffffff;
+  color: #1d4ed8;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* Botón azul "COMENZAR" grande */
+.hm-btn-cta {
+  border-radius: 999px;
+  border: none;
+  padding: 9px 22px;
+  font-size: 14px;
+  font-weight: 600;
+  background: #2f80ff;
+  color: #ffffff;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 12px 28px rgba(47, 128, 255, 0.65);
+}
+
+.hm-btn-cta:hover {
+  background: #1d6fe6;
+}
+
+/* =======================================================
+   LOGIN – layout tipo mockup HabitMind
+   ======================================================= */
+
+.hm-login-layout {
+  flex: 1;
+  padding: 36px 40px 48px;
+  display: grid;
+  grid-template-columns: 0.9fr 1.6fr;
+  gap: 32px;
+}
+
+/* Columna izquierda – ilustración */
+.hm-login-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 40px;
+}
+
+.hm-login-illustration-circle {
+  width: 260px;
+  height: 260px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 20%, #bfdbfe, #dbeafe);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hm-login-illustration-img {
+  width: 260px;           /* ajusta según tu mockup */
+  height: auto;
+  object-fit: contain;
+  margin-bottom: 12px;
+}
+
+.hm-login-person-placeholder {
+  width: 150px;
+  height: 210px;
+  border-radius: 999px;
+  background: linear-gradient(160deg, #1d4ed8, #22c55e);
+  opacity: 0.7;
+}
+
+.hm-login-illustration-caption {
+  margin-top: 14px;
+  font-size: 14px;
+  color: var(--hm-gray-600);
+}
+
+/* Columna derecha */
+.hm-login-right {
+  position: relative;
+}
+
+/* Círculo grande de fondo detrás del login */
+.hm-login-bg-circle {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 520px;
+  height: 520px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 20%, #e0f2fe, #eff6ff);
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+/* Tarjeta pequeña de login */
+.hm-login-card-small {
+  position: relative;
+  margin: 32px auto 26px;
+  max-width: 360px;
+  padding: 22px 22px 24px;
+  background: #ffffff;
+  border-radius: 22px;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.18);
+  z-index: 1;
+}
+
+.hm-login-card-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+/* Nota de registro debajo del botón */
+.hm-login-small-note {
+  margin-top: 10px;
+  font-size: 12px;
+  text-align: center;
+}
+
+.hm-login-small-note a {
+  color: var(--hm-blue);
+  text-decoration: none;
+}
+
+.hm-login-small-note a:hover {
+  text-decoration: underline;
+}
+
+/* Panel grande de registro */
+.hm-register-panel {
+  position: relative;
+  margin-top: 8px;
+  padding: 22px 26px 26px;
+  border-radius: 24px;
+  background: linear-gradient(180deg, #e0f2ff, #e5f0ff);
+  box-shadow: var(--hm-shadow-soft);
+  z-index: 0;
+}
+
+.hm-register-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+/* Fila Edad + Género */
+.hm-register-row {
+  display: grid;
+  grid-template-columns: 0.5fr 0.9fr;
+  gap: 16px;
+}
+
+.hm-gender-options {
+  display: flex;
+  gap: 10px;
+  font-size: 13px;
+}
+
+/* Botón azul grande reutilizable */
+.hm-btn-full-primary {
+  background: var(--hm-blue);
+  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.45);
+}
+
+.hm-btn-full-primary:hover {
+  background: #1d4ed8;
+}
+
+/* Versión responsive – una sola columna */
+@media (max-width: 992px) {
+  .hm-login-layout {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 28px 18px 40px;
+  }
+
+  .hm-login-left {
+    order: 2;
+    padding-top: 24px;
+  }
+
+  .hm-login-right {
+    order: 1;
+  }
+
+  .hm-login-bg-circle {
+    width: 380px;
+    height: 380px;
+  }
+
+  .hm-register-panel {
+    margin-top: 16px;
+  }
+}
+
+/* Backdrop del modal */
+.hm-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+/* Tarjeta del modal */
+.hm-modal-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 22px 24px 20px;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.25);
+  max-width: 460px;
+  width: 100%;
+}
+
+.hm-modal-title {
+  margin: 0 0 14px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.hm-modal-label {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.hm-modal-label .hm-input {
+  width: 100%;
+  margin-top: 4px;
+}
+
+/* Fila de dificultad */
+.hm-difficulty-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+  font-size: 13px;
+}
+
+.hm-difficulty-row label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.hm-difficulty-row input[type="radio"] {
+  margin: 0;
+}
+
+/* Puntos de colores (reaprovecha hm-habit-dot) */
+.hm-dot-easy {
+  background: #22c55e;  /* verde fácil */
+}
+
+.hm-dot-medium {
+  background: #fb923c;  /* naranja intermedio */
+}
+
+.hm-dot-hard {
+  background: #ef4444;  /* rojo difícil */
+}
+
+/* Botones del modal */
+.hm-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.hm-btn-secondary {
+  border-radius: 999px;
+  padding: 8px 18px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.hm-btn-secondary:hover {
+  background: #f3f4f6;
+}
+
+.hm-btn-primary {
+  border-radius: 999px;
+  padding: 8px 18px;
+  border: none;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 13px;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.45);
+}
+
+.hm-btn-primary:hover {
+  background: #1d4ed8;
+}
+
+.hm-logo-img {
+    height: 70px;        /* Tamaño más grande */
+    width: auto;         /* Mantiene proporción */
+    object-fit: contain;
+    margin-right: 6px;   /* Espacio entre logo y texto */
+    display: block;
+}
+
+.hm-header-app-left,
+.hm-header-public-left {
+    display: flex;
+    align-items: center; /* Centra verticalmente el logo + texto */
+    gap: 15px;           /* Separación limpia */
+}
+
+/* Overlay del modal */
+.hm-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.35); /* azul oscuro semi-transparente */
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+/* Se muestra cuando hay errores */
+.hm-modal-overlay.is-visible {
+  display: flex;
+}
+
+/* Tarjeta del modal */
+.hm-modal {
+  background: #f9fafb;
+  border-radius: 20px;
+  padding: 24px 28px;
+  max-width: 420px;
+  width: 90%;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.25);
+  border: 1px solid #e5e7eb;
+  animation: hm-bounce-in 0.45s ease-out;
+}
+
+/* Títulos y textos */
+.hm-modal-title {
+  font-size: 20px;
+  margin: 0 0 4px 0;
+  color: #111827;
+}
+
+.hm-modal-subtitle {
+  margin: 0 0 10px 0;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.hm-modal-list {
+  margin: 0 0 16px 18px;
+  padding: 0;
+  color: #b91c1c; /* rojo suave para errores */
+  font-size: 14px;
+}
+
+/* Botón de cerrar */
+.hm-modal-btn {
+  display: inline-block;
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(90deg, #2563eb, #3b82f6);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.hm-modal-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px rgba(37, 99, 235, 0.4);
+}
+
+/* Animación tipo rebote */
+@keyframes hm-bounce-in {
+  0% {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

@@ -1,0 +1,36 @@
+﻿# Entornos virtuales Python
+.venv/
+.venv-rasa/
+venv/
+env/
+rasa-bot/.venv/
+rasa-bot/.ve/
+rasa-bot/.venv-rasa/
+
+# Cache Python
+__pycache__/
+*.py[cod]
+
+# Rasa
+rasa-bot/.rasa/
+rasa-bot/models/
+
+# Archivos pesados o ajenos
+*.pka
+*.log
+
+# Configuración local
+.env
+.env.*
+
+# Editor / sistema
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+rasa-bot/.venv/
+rasa-bot/.ve/
+rasa-bot/.rasa/
+rasa-bot/models/
+.venv-rasa/

@@ -1,0 +1,76 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - mood_great
+  - mood_unhappy
+  - ask_habit_help          # "quiero crear un hábito"
+  - provide_habit_info      # el usuario ya dice qué hábito quiere
+  - ask_progress            # preguntar por progreso
+  - bot_challenge
+  - nlu_fallback
+
+entities:
+  - habit_name
+
+slots:
+  habit_name:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: habit_name
+
+responses:
+  utter_greet:
+    - text: "¡Hola! 👋 Soy tu asistente de hábitos HabitMind. ¿En qué hábito te gustaría trabajar hoy?"
+
+  utter_goodbye:
+    - text: "¡Gracias por pasar por aquí! Nos vemos en tu próximo pequeño paso 👋."
+    - text: "Fue un gusto ayudarte. Recuerda: cada día cuenta. ¡Hasta luego! 👋"
+
+  utter_ask_habit_goal:
+    - text: "Cuéntame, ¿qué hábito quieres empezar o mejorar? (por ejemplo: leer 10 minutos, tomar agua, hacer ejercicio...)"
+
+  utter_ask_habit_details:
+    - text: "Perfecto, trabajar en *{habit_name}* suena muy bien 🙌.\n\nSiguiendo la idea de *Hábitos Atómicos*, vamos a hacerlo muy pequeño:\n\n👉 ¿Cuál sería la versión de **2 minutos** de ese hábito?"
+
+  utter_encourage_identity:
+    - text: "Genial. Recuerda la idea central de *Hábitos Atómicos*: cada vez que cumples tu hábito refuerzas tu identidad.\n\nNo pienses solo \"quiero hacer {habit_name}\", sino \"soy el tipo de persona que cumple sus hábitos\" 💪."
+
+  utter_habit_plan_summary:
+    - text: "Entonces, resumamos tu plan:\n\n• Hábito: {habit_name}\n• Versión de 2 minutos: lo defines tú en tu mente (algo tan pequeño que sea imposible fallar)\n\nTe recomiendo añadirlo ahora en HabitMind en el botón **\"Nuevo hábito\"** ✔."
+
+  utter_ask_progress:
+    - text: "¿Cómo vas con tus hábitos esta semana? ¿Sientes que estás siendo constante o se te está complicando?"
+
+  utter_progress_encouragement:
+    - text: "Lo importante es enfocarte en la **constancia**, no en la perfección. Un pequeño paso hoy ya cuenta como victoria 💚."
+
+  utter_mood_great:
+    - text: "¡Me alegra mucho escuchar eso! 🎉 Cuando te sientas con energía es un gran momento para reforzar tus hábitos clave."
+
+  utter_mood_unhappy:
+    - text: "Lo siento, días difíciles también cuentan. En esos momentos un hábito muy pequeño (1–2 minutos) es suficiente. Lo importante es no romper la cadena."
+
+  utter_iamabot:
+    - text: "Soy HabitMind Bot 🤖, un asistente diseñado para ayudarte a construir nuevos hábitos usando ideas de *Hábitos Atómicos*."
+
+  utter_fallback:
+    - text: "Mmm, no estoy seguro de haber entendido. ¿Podrías decirlo de otra forma o contarme qué hábito quieres trabajar?"
+
+  utter_ack_affirm:
+    - text: "Perfecto, seguimos entonces 💪."
+    
+  utter_ack_deny:
+    - text: "Vale, sin problema. Si quieres cambiamos de enfoque."
+
+actions:
+  - action_suggest_small_step
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
