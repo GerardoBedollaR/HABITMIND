@@ -1,63 +1,54 @@
 <?php
-// procesar_login.php
 session_start();
 require __DIR__ . '/db.php';
 
-// 1. Solo aceptar POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: login.php');
     exit;
 }
 
-// 2. Tomar datos del formulario
-$email = trim($_POST['email'] ?? '');
-$pass  = $_POST['password'] ?? '';
+$correo = trim($_POST['email'] ?? $_POST['correo'] ?? '');
+$pass   = $_POST['password'] ?? '';
 
-// 3. Validación básica
-if ($email === '' || $pass === '') {
-    $_SESSION['login_error'] = 'Por favor ingresa tu correo y contraseña.';
+if ($correo === '' || $pass === '') {
+    $_SESSION['login_error'] = 'Ingresa correo y contraseña.';
     header('Location: login.php');
     exit;
 }
 
-// 4. Buscar usuario por correo
-$sql  = "SELECT id_usuario, nombre_completo, correo, password_hash
-         FROM usuarios
-         WHERE correo = ?";
+$sql = "SELECT id_usuario, nombre, correo, password_hash
+        FROM usuarios
+        WHERE correo = ?
+        LIMIT 1";
+
 $stmt = $conn->prepare($sql);
 
 if (!$stmt) {
-    $_SESSION['login_error'] = 'Error interno en el servidor (prepare).';
-    header('Location: login.php');
-    exit;
+    die('Error al preparar login: ' . $conn->error);
 }
 
-$stmt->bind_param("s", $email);
+$stmt->bind_param("s", $correo);
 $stmt->execute();
-$result = $stmt->get_result();
 
-if ($result->num_rows === 0) {
-    // No existe ese correo
+$resultado = $stmt->get_result();
+
+if ($resultado->num_rows === 0) {
     $_SESSION['login_error'] = 'Correo o contraseña incorrectos.';
     header('Location: login.php');
     exit;
 }
 
-$usuario = $result->fetch_assoc();
-$stmt->close();
+$usuario = $resultado->fetch_assoc();
 
-// 5. Verificar la contraseña
 if (!password_verify($pass, $usuario['password_hash'])) {
     $_SESSION['login_error'] = 'Correo o contraseña incorrectos.';
     header('Location: login.php');
     exit;
 }
 
-// 6. Login correcto: guardar datos en sesión
-$_SESSION['id_usuario']      = $usuario['id_usuario'];
-$_SESSION['usuario_nombre']  = $usuario['nombre_completo'];
-$_SESSION['usuario_email']   = $usuario['correo'];
+$_SESSION['id_usuario'] = $usuario['id_usuario'];
+$_SESSION['usuario_nombre'] = $usuario['nombre'];
+$_SESSION['usuario_email'] = $usuario['correo'];
 
-// 7. Redirigir al dashboard (ajusta el archivo si usas otro)
 header('Location: dashboard.php');
 exit;

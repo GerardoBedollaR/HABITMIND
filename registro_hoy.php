@@ -1,9 +1,26 @@
 <?php
-// registro_hoy.php
 session_start();
+require_once 'api/db.php';
 
-$usuario_nombre = $_SESSION['usuario_nombre'] ?? 'HabitMinder';
-$usuario_email  = $_SESSION['usuario_email']  ?? '';
+$id_usuario = $_SESSION['id_usuario'] ?? 0;
+$usuario_nombre = $_SESSION['usuario_nombre'] ?? 'Usuario';
+
+$sql = "SELECT id_habito, nombre, color, icono
+        FROM habitos
+        WHERE id_usuario = ?
+        AND activo = 1
+        ORDER BY id_habito DESC";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $id_usuario);
+$stmt->execute();
+$resultado = $stmt->get_result();
+
+$habitos = [];
+
+while ($fila = $resultado->fetch_assoc()) {
+    $habitos[] = $fila;
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -17,20 +34,12 @@ $usuario_email  = $_SESSION['usuario_email']  ?? '';
 <body class="hm-app-page hm-chat-page">
 
 <header class="hm-header-app">
-  <!-- HEADER PÚBLICO HABITMIND -->
-
-    <!-- Logo + texto -->
   <div class="hm-header-app-left">
     <img src="assets/img/logo.png" alt="HabitMind Logo" class="hm-logo-img">
     <div class="hm-logo-text">HABITMIND</div>
   </div>
 
-
-
-  <!-- Configuración + Salir -->
   <div class="hm-header-app-right">
-
-     <!-- BOTÓN DE REGRESO AL DASHBOARD -->
     <a href="dashboard.php" class="hm-btn-back" style="
         padding: 8px 16px;
         background: #e5efff;
@@ -55,10 +64,8 @@ $usuario_email  = $_SESSION['usuario_email']  ?? '';
   </div>
 </header>
 
-
 <main class="hm-app-main">
 
-  <!-- ============= Sidebar como en el dashboard ============= -->
   <aside class="hm-sidebar">
     <div class="hm-sidebar-header">Mis hábitos</div>
 
@@ -67,57 +74,44 @@ $usuario_email  = $_SESSION['usuario_email']  ?? '';
     </div>
 
     <div class="hm-sidebar-list">
-      <div class="hm-habit-item">
-        <span class="hm-habit-dot" style="background:#22c55e;"></span>
-        Hacer ejercicio
-      </div>
-      <div class="hm-habit-item">
-        <span class="hm-habit-dot" style="background:#3b82f6;"></span>
-        Beber agua
-      </div>
-      <div class="hm-habit-item">
-        <span class="hm-habit-dot" style="background:#eab308;"></span>
-        Leer 20 min
-      </div>
-      <div class="hm-habit-item">
-        <span class="hm-habit-dot" style="background:#f97316;"></span>
-        Meditar
-      </div>
-      <div class="hm-habit-item">
-        <span class="hm-habit-dot" style="background:#ef4444;"></span>
-        Comer saludable
-      </div>
+      <?php if (empty($habitos)): ?>
+        <p style="font-size:14px; color:#64748b;">
+          Aún no tienes hábitos.
+        </p>
+      <?php else: ?>
+        <?php foreach ($habitos as $habito): ?>
+          <div class="hm-habit-item">
+            <span 
+              class="hm-habit-dot" 
+              style="background: <?= htmlspecialchars($habito['color']) ?>;">
+            </span>
+            <?= htmlspecialchars($habito['icono']) ?>
+            <?= htmlspecialchars($habito['nombre']) ?>
+          </div>
+        <?php endforeach; ?>
+      <?php endif; ?>
     </div>
 
     <div id="hm-open-add-habit" class="hm-sidebar-add" style="cursor:pointer;">
       + Agregar hábito
     </div>
 
-
     <a href="progreso.php" class="hm-sidebar-progress-btn">
-    Mira tu progreso 📊
+      Mira tu progreso 📊
     </a>
-
   </aside>
 
-  <!-- ============= Contenido principal con el chat ============= -->
   <section class="hm-app-content hm-chat-card">
-
-
-    <!-- Encabezado tipo mockup -->
     <div class="hm-chat-header">Asistente HabitMind</div>
     <div class="hm-chat-timestamp">
       Hola, <strong><?= htmlspecialchars($usuario_nombre) ?></strong>.  
       ¿Qué hábito quieres registrar hoy?
     </div>
 
-    <!-- Ventana de chat -->
     <section class="hm-chat-section">
       <div class="hm-chat-window" id="hm-chat-window">
 
-        <!-- Log de mensajes -->
         <div class="hm-chat-log" id="hm-chat-log">
-          <!-- Mensaje inicial del bot -->
           <div class="hm-chat-msg hm-chat-bot">
             <span class="hm-chat-author">Bot · HabitMind</span>
             <p>
@@ -127,7 +121,6 @@ $usuario_email  = $_SESSION['usuario_email']  ?? '';
           </div>
         </div>
 
-        <!-- Input + botón usando las clases que YA tienes en el CSS -->
         <div class="hm-chat-input-area">
           <input
             type="text"
@@ -141,25 +134,23 @@ $usuario_email  = $_SESSION['usuario_email']  ?? '';
 
       </div>
     </section>
-
   </section>
 </main>
 
 <?php include 'partials/footer.php'; ?>
 
-<!-- ============ Script de integración REST con Rasa ============ -->
 <script>
 (function() {
   const chatLog   = document.getElementById('hm-chat-log');
   const chatInput = document.getElementById('hm-chat-input');
   const chatSend  = document.getElementById('hm-chat-send');
 
-  // ID de sesión para mantener contexto en Rasa
   const SENDER_ID = "web-" + Math.random().toString(36).slice(2);
 
   function appendMessage(text, from) {
     const wrapper = document.createElement('div');
     wrapper.classList.add('hm-chat-msg');
+
     if (from === 'user') {
       wrapper.classList.add('hm-chat-user');
     } else {
@@ -168,7 +159,7 @@ $usuario_email  = $_SESSION['usuario_email']  ?? '';
 
     const author = document.createElement('span');
     author.classList.add('hm-chat-author');
-    author.textContent = (from === 'user') ? 'Tú' : 'Bot · HabitMind';
+    author.textContent = from === 'user' ? 'Tú' : 'Bot · HabitMind';
 
     const p = document.createElement('p');
     p.textContent = text;
@@ -179,32 +170,43 @@ $usuario_email  = $_SESSION['usuario_email']  ?? '';
     chatLog.scrollTop = chatLog.scrollHeight;
   }
 
+  async function enviarMensajeARasa(mensaje) {
+    const respuesta = await fetch("http://localhost:5005/webhooks/rest/webhook", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        sender: SENDER_ID,
+        message: mensaje
+      })
+    });
+
+    if (!respuesta.ok) {
+      throw new Error("Error HTTP: " + respuesta.status);
+    }
+
+    return await respuesta.json();
+  }
+
   async function sendToRasa(message) {
     appendMessage(message, 'user');
 
     try {
-      const resp = await fetch('http://localhost:5005/webhooks/rest/webhook', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          sender: SENDER_ID,
-          message: message
-        })
-      });
+      const respuestasBot = await enviarMensajeARasa(message);
 
-      const data = await resp.json();
-
-      if (Array.isArray(data) && data.length > 0) {
-        data.forEach(evt => {
-          if (evt.text) {
-            appendMessage(evt.text, 'bot');
+      if (Array.isArray(respuestasBot) && respuestasBot.length > 0) {
+        respuestasBot.forEach((r) => {
+          if (r.text) {
+            appendMessage(r.text, 'bot');
           }
         });
       } else {
-        appendMessage('Hmm... no recibí respuesta del servidor.', 'bot');
+        appendMessage('No entendí bien tu mensaje. ¿Puedes reformularlo?', 'bot');
       }
+
     } catch (err) {
-      console.error(err);
+      console.error("Error al contactar Rasa:", err);
       appendMessage('Ocurrió un error al contactar al asistente.', 'bot');
     }
   }
@@ -212,11 +214,13 @@ $usuario_email  = $_SESSION['usuario_email']  ?? '';
   function handleSend() {
     const text = chatInput.value.trim();
     if (!text) return;
+
     chatInput.value = '';
     sendToRasa(text);
   }
 
   chatSend.addEventListener('click', handleSend);
+
   chatInput.addEventListener('keydown', function(e) {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -226,7 +230,6 @@ $usuario_email  = $_SESSION['usuario_email']  ?? '';
 })();
 </script>
 
-<!-- Modal: Agregar nuevo hábito -->
 <div id="hm-habit-modal" class="hm-modal-backdrop" style="display:none;">
   <div class="hm-modal-card">
     <h2 class="hm-modal-title">Agregar nuevo hábito</h2>
@@ -273,7 +276,6 @@ $usuario_email  = $_SESSION['usuario_email']  ?? '';
   </div>
 </div>
 
-
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   const sidebarAdd = document.querySelector('.hm-sidebar-add');
@@ -285,7 +287,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const btnSave    = document.getElementById('hm-habit-save');
 
   if (!sidebarAdd || !sidebarList || !modal) {
-    // Si esta página no tiene sidebar o modal, salimos silenciosamente
     return;
   }
 
@@ -307,12 +308,12 @@ document.addEventListener('DOMContentLoaded', function () {
   function colorForDifficulty(diff) {
     switch (diff) {
       case 'media':
-        return '#fb923c'; // naranja
+        return '#fb923c';
       case 'dificil':
-        return '#ef4444'; // rojo
+        return '#ef4444';
       case 'facil':
       default:
-        return '#22c55e'; // verde
+        return '#22c55e';
     }
   }
 
@@ -334,6 +335,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function handleSave() {
     const name = inputName.value.trim();
+
     if (!name) {
       inputName.focus();
       return;
@@ -344,28 +346,20 @@ document.addEventListener('DOMContentLoaded', function () {
     closeModal();
   }
 
-  // Eventos
   sidebarAdd.addEventListener('click', function (e) {
     e.preventDefault();
     openModal();
   });
 
-  btnCancel.addEventListener('click', function () {
-    closeModal();
-  });
+  btnCancel.addEventListener('click', closeModal);
+  btnSave.addEventListener('click', handleSave);
 
-  btnSave.addEventListener('click', function () {
-    handleSave();
-  });
-
-  // Cerrar con ESC
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && modal.style.display === 'flex') {
       closeModal();
     }
   });
 
-  // Cerrar si clicas fuera de la tarjeta
   modal.addEventListener('click', function (e) {
     if (e.target === modal) {
       closeModal();
@@ -373,7 +367,6 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 </script>
-
 
 </body>
 </html>

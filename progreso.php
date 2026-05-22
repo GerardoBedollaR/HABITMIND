@@ -1,7 +1,26 @@
 <?php
 session_start();
+require_once 'api/db.php';
 
-$usuario_nombre = $_SESSION['usuario_nombre'] ?? 'HabitMinder';
+$id_usuario = $_SESSION['id_usuario'] ?? 0;
+$usuario_nombre = $_SESSION['usuario_nombre'] ?? 'Usuario';
+
+$sql = "SELECT id_habito, nombre, color, icono
+        FROM habitos
+        WHERE id_usuario = ?
+        AND activo = 1
+        ORDER BY id_habito DESC";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $id_usuario);
+$stmt->execute();
+$resultado = $stmt->get_result();
+
+$habitos = [];
+
+while ($fila = $resultado->fetch_assoc()) {
+    $habitos[] = $fila;
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -61,26 +80,22 @@ $usuario_nombre = $_SESSION['usuario_nombre'] ?? 'HabitMinder';
         </div>
 
         <div class="hm-sidebar-list">
-          <div class="hm-habit-item">
-            <span class="hm-habit-dot" style="background:#22c55e;"></span>
-            Hacer ejercicio
-          </div>
-          <div class="hm-habit-item">
-            <span class="hm-habit-dot" style="background:#3b82f6;"></span>
-            Beber agua
-          </div>
-          <div class="hm-habit-item">
-            <span class="hm-habit-dot" style="background:#eab308;"></span>
-            Leer 20 min
-          </div>
-          <div class="hm-habit-item">
-            <span class="hm-habit-dot" style="background:#f97316;"></span>
-            Meditar
-          </div>
-          <div class="hm-habit-item">
-            <span class="hm-habit-dot" style="background:#ef4444;"></span>
-            Comer saludable
-          </div>
+          <?php if (empty($habitos)): ?>
+            <p style="font-size:14px; color:#64748b;">
+              Aún no tienes hábitos.
+            </p>
+          <?php else: ?>
+            <?php foreach ($habitos as $habito): ?>
+              <div class="hm-habit-item">
+                <span 
+                  class="hm-habit-dot" 
+                  style="background: <?= htmlspecialchars($habito['color']) ?>;">
+                </span>
+                <?= htmlspecialchars($habito['icono']) ?>
+                <?= htmlspecialchars($habito['nombre']) ?>
+              </div>
+            <?php endforeach; ?>
+          <?php endif; ?>
         </div>
 
         <div id="hm-open-add-habit" class="hm-sidebar-add" style="cursor:pointer;">

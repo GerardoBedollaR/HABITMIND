@@ -1,60 +1,65 @@
 version: "3.1"
 
 rules:
-- rule: Responder saludo
-  steps:
-    - intent: greet
-    - action: utter_greet
+  - rule: Responder saludo
+    steps:
+      - intent: greet
+      - action: utter_greet
 
-- rule: Decir adiós
-  steps:
-    - intent: goodbye
-    - action: utter_goodbye
+  - rule: Decir adiós
+    steps:
+      - intent: goodbye
+      - action: utter_goodbye
 
-- rule: Responder reto de bot
-  steps:
-    - intent: bot_challenge
-    - action: utter_iamabot
+  - rule: Responder reto de bot
+    steps:
+      - intent: bot_challenge
+      - action: utter_iamabot
 
-- rule: Preguntar detalles cuando pidan ayuda de hábitos
-  steps:
-    - intent: ask_habit_help
-    - action: utter_ask_habit_goal
+  - rule: Preguntar detalles cuando pidan ayuda de hábitos
+    steps:
+      - intent: ask_habit_help
+      - action: utter_ask_habit_goal
 
-- rule: Fallback genérico
-  steps:
-    - intent: nlu_fallback
-    - action: utter_fallback
+  - rule: Fallback genérico
+    steps:
+      - intent: nlu_fallback
+      - action: utter_fallback
 
-- rule: manejar cuando el usuario ya dice el hábito
-  steps:
-    - intent: provide_habit_info
-    - action: action_suggest_small_step
-    - action: utter_encourage_identity
-    - action: utter_habit_plan_summary
+  - rule: manejar cuando el usuario ya dice el hábito
+    steps:
+      - intent: provide_habit_info
+      - action: action_suggest_small_step
+      - action: utter_encourage_identity
+      - action: utter_habit_plan_summary
 
-- rule: reaccionar cuando el usuario se siente muy bien
-  steps:
-    - intent: mood_great
-    - action: utter_mood_great
+  - rule: reaccionar cuando el usuario se siente muy bien
+    steps:
+      - intent: mood_great
+      - action: utter_mood_great
 
-- rule: reaccionar cuando el usuario se siente mal
-  steps:
-    - intent: mood_unhappy
-    - action: utter_mood_unhappy
-    - action: utter_progress_encouragement
+  - rule: reaccionar cuando el usuario se siente mal
+    steps:
+      - intent: mood_unhappy
+      - action: utter_mood_unhappy
+      - action: utter_progress_encouragement
 
-- rule: cuando el usuario pregunta por su progreso
-  steps:
-    - intent: ask_progress
-    - action: utter_ask_progress
+  - rule: cuando el usuario pregunta por su progreso
+    steps:
+      - intent: ask_progress
+      - action: utter_ask_progress
 
-- rule: respuesta simple a afirmación
-  steps:
-    - intent: affirm
-    - action: utter_ack_affirm
+  - rule: respuesta simple a afirmación
+    steps:
+      - intent: affirm
+      - action: utter_ack_affirm
 
-- rule: respuesta simple a negación
-  steps:
-    - intent: deny
-    - action: utter_ack_deny
+  - rule: respuesta simple a negación
+    steps:
+      - intent: deny
+      - action: utter_ack_deny
+
+  - rule: Crear hábito
+    steps:
+      - intent: crear_habito
+      - action: action_crear_habito

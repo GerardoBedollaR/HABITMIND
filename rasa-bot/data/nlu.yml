@@ -103,3 +103,28 @@ nlu:
     - asdasd asdasd
     - qwe qwe qwe
     - texto sin sentido
+
+- intent: crear_habito
+  examples: |
+    - quiero crear el hábito de leer
+    - quiero crear el habito de leer
+    - quiero crear el hábito de meditar
+    - quiero crear el habito de meditar
+    - quiero crear el hábito de hacer ejercicio
+    - quiero crear el habito de beber agua
+    - quiero crear el hábito de estudiar
+    - quiero crear el hábito de correr
+    - quiero crear el habito de dormir temprano
+    - crear el hábito de leer
+    - crear el habito de meditar
+    - crea el hábito de tomar agua
+    - crea el habito de estudiar redes
+    - agrega el hábito de leer
+    - agrega el habito de meditar
+    - añade el hábito de comer saludable
+    - añade el habito de caminar
+    - nuevo hábito de leer
+    - nuevo habito de meditar
+    - quiero agregar leer
+    - quiero agregar meditar
+    - quiero añadir estudiar

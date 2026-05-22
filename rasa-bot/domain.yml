@@ -12,6 +12,7 @@ intents:
   - ask_progress            # preguntar por progreso
   - bot_challenge
   - nlu_fallback
+  - crear_habito
 
 entities:
   - habit_name
@@ -70,6 +71,7 @@ responses:
 
 actions:
   - action_suggest_small_step
+  - action_crear_habito
 
 session_config:
   session_expiration_time: 60
