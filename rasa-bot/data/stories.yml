@@ -1,23 +1,328 @@
 version: "3.1"
 
 stories:
-- story: saludo y detección de hábito
-  steps:
-    - intent: greet
-    - action: utter_greet
-    - intent: ask_habit_help
-    - action: utter_ask_habit_goal
 
-- story: flujo completo de nuevo hábito
-  steps:
-    - intent: greet
-    - action: utter_greet
-    - intent: provide_habit_info
-    - action: action_suggest_small_step
-    - action: utter_encourage_identity
-    - action: utter_habit_plan_summary
+  # =========================
+  # FLUJOS GENERALES
+  # =========================
 
-- story: despedida
-  steps:
-    - intent: goodbye
-    - action: utter_goodbye
+  - story: Usuario saluda y pide ayuda
+    steps:
+      - intent: saludo
+      - action: utter_saludo
+      - intent: pedir_ayuda
+      - action: utter_pedir_ayuda
+
+  - story: Usuario saluda y pide motivacion
+    steps:
+      - intent: saludo
+      - action: utter_saludo
+      - intent: pedir_motivacion
+      - action: utter_pedir_motivacion
+
+  - story: Usuario pregunta que es el bot
+    steps:
+      - intent: bot_challenge
+      - action: utter_bot_challenge
+
+  - story: Usuario agradece
+    steps:
+      - intent: agradecimiento
+      - action: utter_agradecimiento
+
+
+  # =========================
+  # CREACIÓN DE HÁBITOS
+  # IMPORTANTE:
+  # Este flujo ya NO usa formulario.
+  # Ahora llama directamente a action_crear_habito.
+  # =========================
+
+  - story: Crear habito directamente
+    steps:
+      - intent: iniciar_registro_habito
+
+  - story: Saludo y crear habito
+    steps:
+      - intent: saludo
+      - action: utter_saludo
+      - intent: iniciar_registro_habito
+
+  - story: Ayuda y crear habito
+    steps:
+      - intent: pedir_ayuda
+      - action: utter_pedir_ayuda
+      - intent: iniciar_registro_habito
+
+  - story: Explicacion y crear habito
+    steps:
+      - intent: explicar_habitos_atomicos
+      - action: utter_explicar_habitos_atomicos
+      - intent: iniciar_registro_habito
+
+  - story: Recaida y crear nuevo habito
+    steps:
+      - intent: recaida_habito
+      - action: utter_recaida_habito
+      - intent: iniciar_registro_habito
+
+
+  # =========================
+  # REGISTRAR HÁBITO REALIZADO HOY
+  # Debe coincidir con la regla:
+  # utter_registrar_habito_hoy -> action_registrar_habito_hoy
+  # =========================
+
+  - story: Registrar habito realizado hoy
+    steps:
+      - intent: registrar_habito_hoy
+      - action: utter_registrar_habito_hoy
+
+  - story: Saludo y registrar habito realizado hoy
+    steps:
+      - intent: saludo
+      - action: utter_saludo
+      - intent: registrar_habito_hoy
+      - action: utter_registrar_habito_hoy
+
+  - story: Falta motivacion y registra avance minimo
+    steps:
+      - intent: falta_motivacion
+      - action: utter_falta_motivacion
+      - intent: registrar_habito_hoy
+      - action: utter_registrar_habito_hoy
+
+  - story: Consultar habitos y registrar uno realizado
+    steps:
+      - intent: consultar_habitos
+      - action: utter_consultar_habitos
+      - intent: registrar_habito_hoy
+      - action: utter_registrar_habito_hoy
+
+
+  # =========================
+  # CONSULTAS
+  # =========================
+
+  - story: Consultar habitos directamente
+    steps:
+      - intent: consultar_habitos
+      - action: utter_consultar_habitos
+    
+
+  - story: Consultar progreso directamente
+    steps:
+      - intent: consultar_progreso
+      - action: utter_consultar_progreso
+
+  - story: Consultar habitos y luego progreso
+    steps:
+      - intent: consultar_habitos
+      - action: utter_consultar_habitos
+      - intent: consultar_progreso
+      - action: utter_consultar_progreso
+
+  - story: Consultar progreso y pedir consejo
+    steps:
+      - intent: consultar_progreso
+      - action: utter_consultar_progreso
+      - intent: pedir_consejo_habito
+      - action: utter_pedir_consejo_habito
+
+  - story: Consultar progreso y pedir motivacion
+    steps:
+      - intent: consultar_progreso
+      - action: utter_consultar_progreso
+      - intent: pedir_motivacion
+      - action: utter_pedir_motivacion
+
+
+  # =========================
+  # MODIFICAR Y ELIMINAR HÁBITOS
+  # =========================
+
+  - story: Modificar habito directamente
+    steps:
+      - intent: modificar_habito
+      - action: utter_modificar_habito
+
+  - story: Consultar habitos y modificar uno
+    steps:
+      - intent: consultar_habitos
+      - action: utter_consultar_habitos
+      - intent: modificar_habito
+      - action: utter_modificar_habito
+
+  - story: Modificar habito y consultar progreso
+    steps:
+      - intent: modificar_habito
+      - action: utter_modificar_habito
+      - intent: consultar_progreso
+      - action: utter_consultar_progreso
+
+  - story: Eliminar habito directamente
+    steps:
+      - intent: eliminar_habito
+      - action: utter_eliminar_habito
+
+  - story: Consultar habitos y eliminar uno
+    steps:
+      - intent: consultar_habitos
+      - action: utter_consultar_habitos
+      - intent: eliminar_habito
+      - action: utter_eliminar_habito
+
+
+  # =========================
+  # MOTIVACIÓN, RECAÍDAS Y CONSEJOS
+  # =========================
+
+  - story: Usuario pide consejo de habitos
+    steps:
+      - intent: pedir_consejo_habito
+      - action: utter_pedir_consejo_habito
+
+  - story: Usuario pide motivacion
+    steps:
+      - intent: pedir_motivacion
+      - action: utter_pedir_motivacion
+
+  - story: Usuario explica dificultad
+    steps:
+      - intent: dificultad_habito
+      - action: utter_dificultad_habito
+
+  - story: Usuario no tiene motivacion
+    steps:
+      - intent: falta_motivacion
+      - action: utter_falta_motivacion
+
+  - story: Usuario tuvo recaida
+    steps:
+      - intent: recaida_habito
+      - action: utter_recaida_habito
+
+  - story: Usuario tiene dificultad y pide motivacion
+    steps:
+      - intent: dificultad_habito
+      - action: utter_dificultad_habito
+      - intent: pedir_motivacion
+      - action: utter_pedir_motivacion
+
+  - story: Usuario tuvo recaida y pide consejo
+    steps:
+      - intent: recaida_habito
+      - action: utter_recaida_habito
+      - intent: pedir_consejo_habito
+      - action: utter_pedir_consejo_habito
+
+  - story: Usuario sin motivacion pide consejo
+    steps:
+      - intent: falta_motivacion
+      - action: utter_falta_motivacion
+      - intent: pedir_consejo_habito
+      - action: utter_pedir_consejo_habito
+
+
+  # =========================
+  # HÁBITOS ATÓMICOS
+  # =========================
+
+  - story: Explicar habitos atomicos
+    steps:
+      - intent: explicar_habitos_atomicos
+      - action: utter_explicar_habitos_atomicos
+
+  - story: Explicar habitos atomicos y dar consejo
+    steps:
+      - intent: explicar_habitos_atomicos
+      - action: utter_explicar_habitos_atomicos
+      - intent: pedir_consejo_habito
+      - action: utter_pedir_consejo_habito
+
+
+  # =========================
+  # ESTADO DE ÁNIMO
+  # =========================
+
+  - story: Usuario comparte estado de animo
+    steps:
+      - intent: estado_animo
+      - action: utter_estado_animo
+
+  - story: Usuario comparte estado de animo y dificultad
+    steps:
+      - intent: estado_animo
+      - action: utter_estado_animo
+      - intent: dificultad_habito
+      - action: utter_dificultad_habito
+
+  - story: Usuario comparte estado de animo y pide motivacion
+    steps:
+      - intent: estado_animo
+      - action: utter_estado_animo
+      - intent: pedir_motivacion
+      - action: utter_pedir_motivacion
+
+
+  # =========================
+  # DESPEDIDA Y CIERRE
+  # Debe coincidir con la regla:
+  # utter_recordatorio_agregar_habito -> utter_despedida
+  # =========================
+
+  - story: Usuario se despide
+    steps:
+      - intent: despedida
+      - action: utter_recordatorio_agregar_habito
+      - action: utter_despedida
+
+  - story: Usuario agradece y se despide
+    steps:
+      - intent: agradecimiento
+      - action: utter_agradecimiento
+      - intent: despedida
+      - action: utter_recordatorio_agregar_habito
+      - action: utter_despedida
+
+  - story: Usuario registra habito y se despide
+    steps:
+      - intent: registrar_habito_hoy
+      - action: utter_registrar_habito_hoy
+      - intent: despedida
+      - action: utter_recordatorio_agregar_habito
+      - action: utter_despedida
+
+  - story: Usuario crea habito y se despide
+    steps:
+      - intent: iniciar_registro_habito
+      - intent: despedida
+      - action: utter_recordatorio_agregar_habito
+      - action: utter_despedida
+
+  - story: Usuario termina conversacion
+    steps:
+      - intent: terminar_conversacion
+      - action: utter_terminar_conversacion
+
+
+  # =========================
+  # FUERA DE ALCANCE
+  # =========================
+
+  - story: Usuario pregunta algo fuera de alcance
+    steps:
+      - intent: out_of_scope
+      - action: utter_out_of_scope
+
+  - story: Usuario pregunta fuera de alcance y pide ayuda
+    steps:
+      - intent: out_of_scope
+      - action: utter_out_of_scope
+      - intent: pedir_ayuda
+      - action: utter_pedir_ayuda
+
+  - story: Usuario expresa crisis de autolesion
+    steps:
+      - intent: crisis_autolesion
+      - action: utter_crisis_autolesion

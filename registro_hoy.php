@@ -34,34 +34,7 @@ while ($fila = $resultado->fetch_assoc()) {
 <body class="hm-app-page hm-chat-page">
 
 <header class="hm-header-app">
-  <div class="hm-header-app-left">
-    <img src="assets/img/logo.png" alt="HabitMind Logo" class="hm-logo-img">
-    <div class="hm-logo-text">HABITMIND</div>
-  </div>
-
-  <div class="hm-header-app-right">
-    <a href="dashboard.php" class="hm-btn-back" style="
-        padding: 8px 16px;
-        background: #e5efff;
-        border-radius: 25px;
-        color: #2563eb;
-        text-decoration: none;
-        margin-right: 12px;
-        font-weight: 500;
-    ">
-      ← Volver al panel
-    </a>
-
-    <button type="button" class="hm-config-pill">
-      Configuración ⚙️
-    </button>
-
-    <form action="logout.php" method="post" style="margin:0;">
-      <button type="submit" class="hm-btn-logout">
-        Salir
-      </button>
-    </form>
-  </div>
+  <?php include 'partials/header_app.php'; ?>
 </header>
 
 <main class="hm-app-main">
@@ -79,16 +52,28 @@ while ($fila = $resultado->fetch_assoc()) {
           Aún no tienes hábitos.
         </p>
       <?php else: ?>
-        <?php foreach ($habitos as $habito): ?>
-          <div class="hm-habit-item">
-            <span 
-              class="hm-habit-dot" 
-              style="background: <?= htmlspecialchars($habito['color']) ?>;">
+       <?php foreach ($habitos as $habito): ?>
+    <div class="habit-row">
+        <div class="habit-info">
+            <span class="habit-color" style="background-color: <?= htmlspecialchars($habito['color']) ?>;"></span>
+
+            <span class="habit-icon">
+                <?= htmlspecialchars($habito['icono']) ?>
             </span>
-            <?= htmlspecialchars($habito['icono']) ?>
-            <?= htmlspecialchars($habito['nombre']) ?>
-          </div>
-        <?php endforeach; ?>
+
+            <span class="habit-name">
+                <?= htmlspecialchars($habito['nombre']) ?>
+            </span>
+        </div>
+
+        <form action="eliminar_habito.php" method="POST" class="form-eliminar-habito">
+            <input type="hidden" name="id_habito" value="<?= (int)$habito['id_habito'] ?>">
+            <button type="submit" class="delete-habit-btn" title="Eliminar hábito">
+                🗑️
+            </button>
+        </form>
+    </div>
+<?php endforeach; ?>
       <?php endif; ?>
     </div>
 
@@ -365,6 +350,136 @@ document.addEventListener('DOMContentLoaded', function () {
       closeModal();
     }
   });
+});
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const modal = document.getElementById('hm-habit-modal');
+  const inputName = document.getElementById('hm-habit-name');
+  const btnOpen = document.getElementById('hm-open-add-habit');
+  const btnCancel = document.getElementById('hm-habit-cancel');
+  const btnSave = document.getElementById('hm-habit-save');
+
+  if (!modal || !inputName || !btnOpen || !btnCancel || !btnSave) return;
+
+  function abrirModal() {
+    modal.style.display = 'flex';
+    inputName.value = '';
+    inputName.focus();
+  }
+
+  function cerrarModal() {
+    modal.style.display = 'none';
+  }
+
+  async function guardarHabito() {
+    const nombre = inputName.value.trim();
+    const dificultad = document.querySelector('input[name="hm-habit-diff"]:checked')?.value || 'baja';
+
+    if (!nombre) {
+      alert('Escribe el nombre del hábito.');
+      inputName.focus();
+      return;
+    }
+
+    const resp = await fetch('api/crear_habito.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body:
+        'nombre=' + encodeURIComponent(nombre) +
+        '&dificultad=' + encodeURIComponent(dificultad)
+    });
+
+    const data = await resp.json();
+
+    if (data.ok) {
+      cerrarModal();
+      location.reload();
+    } else {
+      alert(data.error || 'No se pudo guardar el hábito.');
+    }
+  }
+
+  btnOpen.addEventListener('click', abrirModal);
+  btnCancel.addEventListener('click', cerrarModal);
+  btnSave.addEventListener('click', guardarHabito);
+
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) cerrarModal();
+  });
+});
+</script>
+
+
+<div id="modalEliminarHabito" class="modal-eliminar-overlay" hidden>
+    <div class="modal-eliminar-card">
+        <div class="modal-eliminar-icon">🗑️</div>
+
+        <h3>Eliminar hábito</h3>
+
+        <p>
+            ¿Seguro que quieres eliminar este hábito?
+            Esta acción no se puede deshacer.
+        </p>
+
+        <div class="modal-eliminar-actions">
+            <button type="button" id="btnCancelarEliminar" class="btn-modal-cancelar">
+                Cancelar
+            </button>
+
+            <button type="button" id="btnConfirmarEliminar" class="btn-modal-eliminar">
+                Sí, eliminar
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const modal = document.getElementById("modalEliminarHabito");
+    const btnCancelar = document.getElementById("btnCancelarEliminar");
+    const btnConfirmar = document.getElementById("btnConfirmarEliminar");
+
+    let formularioPendiente = null;
+
+    document.querySelectorAll(".form-eliminar-habito").forEach(function (formulario) {
+        formulario.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            formularioPendiente = formulario;
+            modal.hidden = false;
+        });
+    });
+
+    btnCancelar.addEventListener("click", function () {
+        formularioPendiente = null;
+        modal.hidden = true;
+    });
+
+    btnConfirmar.addEventListener("click", function () {
+        if (formularioPendiente) {
+            formularioPendiente.submit();
+        }
+    });
+
+    modal.addEventListener("click", function (event) {
+        if (event.target === modal) {
+            formularioPendiente = null;
+            modal.hidden = true;
+        }
+    });
+
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" && !modal.hidden) {
+            formularioPendiente = null;
+            modal.hidden = true;
+        }
+    });
 });
 </script>
 

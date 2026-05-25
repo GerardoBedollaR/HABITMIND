@@ -1,21 +1,37 @@
 version: "3.1"
 
 intents:
-  - greet
-  - goodbye
-  - affirm
-  - deny
-  - mood_great
-  - mood_unhappy
-  - ask_habit_help          # "quiero crear un hábito"
-  - provide_habit_info      # el usuario ya dice qué hábito quiere
-  - ask_progress            # preguntar por progreso
+  - saludo
+  - despedida
+  - agradecimiento
+  - afirmar
+  - negar
   - bot_challenge
-  - nlu_fallback
-  - crear_habito
+  - pedir_ayuda
+  - pedir_motivacion
+  - pedir_consejo_habito
+  - explicar_habitos_atomicos
+  - iniciar_registro_habito
+  - registrar_habito_hoy
+  - consultar_habitos
+  - consultar_progreso
+  - modificar_habito
+  - eliminar_habito
+  - estado_animo
+  - dificultad_habito
+  - falta_motivacion
+  - recaida_habito
+  - terminar_conversacion
+  - out_of_scope
+  - crisis_autolesion
 
 entities:
   - habit_name
+  - habit_category
+  - habit_frequency
+  - mood
+  - obstacle
+  - date
 
 slots:
   habit_name:
@@ -24,54 +40,339 @@ slots:
     mappings:
       - type: from_entity
         entity: habit_name
+      - type: from_text
+        conditions:
+          - active_loop: habit_registration_form
+            requested_slot: habit_name
+          - active_loop: daily_checkin_form
+            requested_slot: habit_name
+
+  habit_category:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: habit_category
+      - type: from_text
+        conditions:
+          - active_loop: habit_registration_form
+            requested_slot: habit_category
+
+  habit_frequency:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: habit_frequency
+      - type: from_text
+        conditions:
+          - active_loop: habit_registration_form
+            requested_slot: habit_frequency
+
+  mood:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: mood
+      - type: from_text
+        conditions:
+          - active_loop: daily_checkin_form
+            requested_slot: mood
+
+  obstacle:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: obstacle
+      - type: from_text
+        conditions:
+          - active_loop: daily_checkin_form
+            requested_slot: obstacle
+
+  date:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: date
+
+  requested_slot:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: custom
+
+forms:
+  habit_registration_form:
+    required_slots:
+      - habit_name
+      - habit_category
+      - habit_frequency
+
+  daily_checkin_form:
+    required_slots:
+      - habit_name
+      - mood
+      - obstacle
 
 responses:
-  utter_greet:
-    - text: "¡Hola! 👋 Soy tu asistente de hábitos HabitMind. ¿En qué hábito te gustaría trabajar hoy?"
+  utter_saludo:
+    - text: "¡Hola! Soy el asistente de HabitMind. Estoy aquí para ayudarte a construir mejores hábitos paso a paso."
+    - text: "¡Hola! ¿Listo para avanzar con tus hábitos de hoy?"
+    - text: "¡Bienvenido a HabitMind! Puedo ayudarte a registrar hábitos, revisar tu progreso o darte recomendaciones para mejorar tu constancia."
 
-  utter_goodbye:
-    - text: "¡Gracias por pasar por aquí! Nos vemos en tu próximo pequeño paso 👋."
-    - text: "Fue un gusto ayudarte. Recuerda: cada día cuenta. ¡Hasta luego! 👋"
+  utter_pedir_ayuda:
+  - text: |
+      Claro. Puedo ayudarte a pensar mejor cómo cumplir tus hábitos.
 
-  utter_ask_habit_goal:
-    - text: "Cuéntame, ¿qué hábito quieres empezar o mejorar? (por ejemplo: leer 10 minutos, tomar agua, hacer ejercicio...)"
+      Puedo apoyarte con cosas como:
+      1. Convertir un hábito grande en uno más pequeño.
+      2. Ayudarte si perdiste motivación.
+      3. Darte ideas para ser más constante.
+      4. Ayudarte a retomar si fallaste un día.
+      5. Orientarte para usar mejor los apartados de HabitMind.
 
-  utter_ask_habit_details:
-    - text: "Perfecto, trabajar en *{habit_name}* suena muy bien 🙌.\n\nSiguiendo la idea de *Hábitos Atómicos*, vamos a hacerlo muy pequeño:\n\n👉 ¿Cuál sería la versión de **2 minutos** de ese hábito?"
+      El registro de hábitos, avances y progreso se realiza directamente en los apartados de la plataforma.
 
-  utter_encourage_identity:
-    - text: "Genial. Recuerda la idea central de *Hábitos Atómicos*: cada vez que cumples tu hábito refuerzas tu identidad.\n\nNo pienses solo \"quiero hacer {habit_name}\", sino \"soy el tipo de persona que cumple sus hábitos\" 💪."
+  utter_agradecimiento:
+    - text: "Con gusto. Si quieres, podemos seguir ajustando tu hábito para que sea más fácil cumplirlo."
+    - text: "De nada. Recuerda que no se trata de hacerlo perfecto, sino de mantener una dirección constante."
 
-  utter_habit_plan_summary:
-    - text: "Entonces, resumamos tu plan:\n\n• Hábito: {habit_name}\n• Versión de 2 minutos: lo defines tú en tu mente (algo tan pequeño que sea imposible fallar)\n\nTe recomiendo añadirlo ahora en HabitMind en el botón **\"Nuevo hábito\"** ✔."
+  utter_afirmar:
+    - text: "Perfecto, continuemos."
+    - text: "Muy bien, seguimos con eso."
 
-  utter_ask_progress:
-    - text: "¿Cómo vas con tus hábitos esta semana? ¿Sientes que estás siendo constante o se te está complicando?"
+  utter_negar:
+    - text: "Entendido. Podemos intentar con otra opción."
+    - text: "No hay problema. Podemos ajustar el plan."
 
-  utter_progress_encouragement:
-    - text: "Lo importante es enfocarte en la **constancia**, no en la perfección. Un pequeño paso hoy ya cuenta como victoria 💚."
+  utter_bot_challenge:
+    - text: "Soy el asistente virtual de HabitMind, diseñado para apoyarte en el seguimiento y mejora de tus hábitos."
 
-  utter_mood_great:
-    - text: "¡Me alegra mucho escuchar eso! 🎉 Cuando te sientas con energía es un gran momento para reforzar tus hábitos clave."
+  utter_pedir_motivacion:
+    - text: "No necesitas hacerlo perfecto, solo necesitas no abandonar. Un avance pequeño hoy sigue siendo avance."
+    - text: "Los hábitos fuertes se construyen con repetición, no con motivación permanente. Hazlo pequeño, pero hazlo."
+    - text: "Si hoy te cuesta mucho, reduce la acción al mínimo. Leer una página, caminar cinco minutos o tomar agua ya cuenta como mantener la cadena."
 
-  utter_mood_unhappy:
-    - text: "Lo siento, días difíciles también cuentan. En esos momentos un hábito muy pequeño (1–2 minutos) es suficiente. Lo importante es no romper la cadena."
+  utter_pedir_consejo_habito:
+    - text: |
+        Un buen hábito debe ser fácil de iniciar. Te recomiendo aplicar esta estructura:
 
-  utter_iamabot:
-    - text: "Soy HabitMind Bot 🤖, un asistente diseñado para ayudarte a construir nuevos hábitos usando ideas de *Hábitos Atómicos*."
+        1. Hazlo obvio: define cuándo y dónde lo harás.
+        2. Hazlo atractivo: relaciónalo con algo que te guste.
+        3. Hazlo sencillo: empieza con una versión muy pequeña.
+        4. Hazlo satisfactorio: registra tu avance para ver progreso.
 
-  utter_fallback:
-    - text: "Mmm, no estoy seguro de haber entendido. ¿Podrías decirlo de otra forma o contarme qué hábito quieres trabajar?"
+  utter_explicar_habitos_atomicos:
+    - text: |
+        La idea principal de los hábitos atómicos es que los cambios pequeños, repetidos con constancia, generan resultados grandes con el tiempo.
 
-  utter_ack_affirm:
-    - text: "Perfecto, seguimos entonces 💪."
-    
-  utter_ack_deny:
-    - text: "Vale, sin problema. Si quieres cambiamos de enfoque."
+        En lugar de enfocarte solo en la meta, enfócate en el sistema:
+        - No solo “quiero leer más”, sino “leeré 10 minutos después de cenar”.
+        - No solo “quiero hacer ejercicio”, sino “haré 5 minutos al despertar”.
+        - No solo “quiero organizarme”, sino “anotaré mis pendientes cada noche”.
 
-actions:
-  - action_suggest_small_step
-  - action_crear_habito
+        La clave es hacer que el hábito sea tan sencillo que sea difícil fallar.
+
+  utter_iniciar_registro_habito:
+    - text: "Perfecto. Vamos a registrar un nuevo hábito."
+
+  utter_ask_habit_name:
+    - text: "¿Qué hábito quieres registrar?"
+    - text: "Escribe el nombre del hábito que quieres agregar. Por ejemplo: tomar agua, leer, caminar o estudiar."
+
+  utter_ask_habit_category:
+    - text: "¿A qué categoría pertenece este hábito? Por ejemplo: salud, estudio, productividad, ejercicio o bienestar."
+    - text: "Indica la categoría del hábito. Puede ser salud, estudio, ejercicio, productividad u otra similar."
+
+  utter_ask_habit_frequency:
+    - text: "¿Con qué frecuencia quieres realizar este hábito? Por ejemplo: diario, lunes a viernes, 3 veces por semana o cada fin de semana."
+    - text: "¿Cada cuándo planeas cumplir este hábito?"
+
+  utter_habit_registration_confirmed:
+    - text: "Listo. El hábito fue preparado para registrarse en HabitMind."
+    - text: "Perfecto. Ya tengo la información necesaria para agregar el hábito."
+
+  utter_registrar_habito_hoy:
+    - text: "Muy bien. Voy a ayudarte a registrar el cumplimiento de tu hábito de hoy."
+
+  utter_consultar_habitos:
+    - text: "Voy a revisar tus hábitos registrados."
+    - text: "Claro, consultemos tus hábitos actuales."
+
+  utter_consultar_progreso:
+    - text: "Vamos a revisar tu progreso para identificar cómo vas y qué puedes mejorar."
+    - text: "Revisemos tu avance. El progreso constante es más importante que la perfección."
+
+  utter_modificar_habito:
+    - text: "Podemos modificar un hábito para que sea más realista y fácil de mantener."
+    - text: "Claro. Ajustar un hábito también es parte del proceso de mejora."
+
+  utter_eliminar_habito:
+    - text: "Entendido. Podemos eliminar un hábito si ya no forma parte de tus objetivos."
+    - text: "De acuerdo. Si un hábito ya no te sirve, es válido retirarlo o reemplazarlo."
+
+  utter_estado_animo:
+    - text: "Gracias por compartir cómo te sientes. Tu estado de ánimo puede influir en tus hábitos, así que podemos ajustar el esfuerzo de hoy."
+    - text: "Está bien sentirse así. Lo importante es adaptar el hábito a tu energía actual y no abandonar por completo."
+
+  utter_ask_mood:
+    - text: "¿Cómo te sientes hoy respecto a tus hábitos?"
+    - text: "Antes de continuar, dime cómo te sientes hoy: motivado, cansado, estresado, tranquilo o desanimado."
+
+  utter_ask_obstacle:
+    - text: "¿Qué obstáculo te está impidiendo cumplir tu hábito?"
+    - text: "¿Qué fue lo más difícil para cumplir tu hábito hoy?"
+
+  utter_dificultad_habito:
+    - text: |
+        Si un hábito se está volviendo difícil, intenta reducirlo a una versión mínima.
+
+        Ejemplos:
+        - En vez de estudiar 2 horas, estudia 15 minutos.
+        - En vez de correr 30 minutos, camina 5 minutos.
+        - En vez de leer un capítulo, lee una página.
+
+        Mantener la continuidad es más importante que hacerlo perfecto.
+
+  utter_falta_motivacion:
+    - text: |
+        La motivación ayuda, pero no debe ser la base del hábito. Es mejor diseñar un sistema sencillo.
+
+        Prueba esto:
+        1. Reduce el hábito a una acción muy pequeña.
+        2. Hazlo siempre después de una rutina existente.
+        3. Registra tu avance aunque sea mínimo.
+        4. Evita castigarte si fallas un día.
+
+  utter_recaida_habito:
+    - text: |
+        Fallar un día no significa perder el progreso. Lo importante es evitar fallar dos veces seguidas.
+
+        Hoy puedes retomar con una versión pequeña del hábito. No busques compensar todo; solo vuelve al camino.
+
+  utter_daily_checkin_completed:
+    - text: |
+        Gracias por compartirlo. Con esa información puedes ajustar tu hábito para que sea más fácil cumplirlo.
+
+        Recuerda: un hábito debe adaptarse a tu realidad, no sentirse como una carga imposible.
+
+  utter_recordatorio_agregar_habito:
+    - text: |
+        Antes de terminar, recuerda registrar manualmente tu avance en el apartado “Agregar hábito” o “Registrar hoy” dentro de HabitMind.
+
+        Si ya cumpliste tu hábito, no olvides marcarlo para que tu progreso quede guardado.
+
+  utter_terminar_conversacion:
+    - text: |
+        Perfecto, terminamos por ahora.
+
+        Recuerda registrar manualmente tu hábito en el apartado “Agregar hábito” o marcarlo como realizado en “Registrar hoy” para que tu avance quede guardado.
+
+  utter_despedida:
+    - text: |
+        Está bien, nos vemos luego.
+
+        Recuerda: si hoy hiciste aunque sea una versión pequeña de tu hábito, regístralo en HabitMind para no perder tu avance.
+
+  utter_out_of_scope:
+    - text: "Por ahora solo puedo ayudarte con temas relacionados con hábitos, motivación, progreso y seguimiento dentro de HabitMind."
+
+  utter_default:
+    - text: "No entendí completamente tu mensaje. ¿Podrías reformularlo o decirme si quieres registrar un hábito, consultar tu progreso o recibir un consejo?"
+
+  utter_please_rephrase:
+    - text: 
+          No entendí completamente tu mensaje.
+
+          Si quieres hablar sobre un hábito, puedo ayudarte a hacerlo más pequeño, más claro o más fácil de cumplir.
+
+          Si lo que sientes es muy pesado o estás en riesgo de hacerte daño, busca ayuda inmediata con alguien cercano o llama al 911.
+
+  utter_orientar_crear_habito:
+  - text: |
+      Perfecto. Te ayudo a estructurar tu hábito antes de guardarlo en HabitMind.
+
+      Para que sea más fácil cumplirlo, intenta definirlo con esta fórmula:
+
+      “Voy a [acción pequeña] en [momento específico] durante [tiempo realista]”.
+
+      Por ejemplo:
+      - Voy a leer 5 minutos después de cenar.
+      - Voy a tomar un vaso de agua al despertar.
+      - Voy a estudiar 15 minutos después de comer.
+      - Voy a caminar 10 minutos por la tarde.
+
+      Mi recomendación es que empieces con una versión pequeña. Después, cuando ya lo tengas claro, guárdalo en el apartado “Agregar hábito”.
+
+  utter_orientar_registrar_hoy:
+    - text: |
+        Qué bien que quieras registrar tu avance. Antes de hacerlo, piensa rápido:
+
+        ¿Realmente cumpliste el hábito completo o hiciste una versión mínima?
+
+        Ambas cosas cuentan si te ayudan a mantener la constancia. Si lo cumpliste, ve al apartado “Registrar hoy” y márcalo para que HabitMind actualice tu progreso.
+
+  utter_redirigir_habitos:
+    - text: |
+        Para ver tus hábitos registrados, entra al apartado de hábitos dentro de HabitMind.
+
+        Yo puedo ayudarte a decidir cuál hábito conviene ajustar, reducir o reforzar, pero la lista oficial de hábitos debe revisarse directamente en el sistema.
+
+  utter_redirigir_progreso:
+    - text: |
+        Tu progreso lo puedes revisar mejor en el apartado “Progreso” de HabitMind.
+
+        Ahí podrás ver tus avances y rachas. Yo puedo ayudarte a interpretar ese progreso: por ejemplo, si notas que estás fallando varios días, podemos ajustar el hábito para hacerlo más fácil de cumplir.
+
+  utter_orientar_modificar_habito:
+    - text: |
+        Modificar un hábito puede ser una buena decisión si se volvió muy difícil.
+
+        Antes de cambiarlo, pregúntate:
+
+        1. ¿El hábito es demasiado grande?
+        2. ¿Lo estoy intentando hacer en un mal momento del día?
+        3. ¿Depende demasiado de mi motivación?
+        4. ¿Puedo hacerlo más pequeño?
+
+        Si decides modificarlo, haz el cambio desde el apartado de hábitos en HabitMind.
+
+  utter_orientar_eliminar_habito:
+    - text: |
+        Antes de eliminar un hábito, considera si realmente necesitas borrarlo o solo reducirlo.
+
+        A veces no fallamos porque el hábito sea malo, sino porque lo planteamos demasiado grande.
+
+        Por ejemplo:
+        - “Hacer ejercicio una hora” puede convertirse en “caminar 10 minutos”.
+        - “Leer un capítulo” puede convertirse en “leer una página”.
+        - “Estudiar dos horas” puede convertirse en “estudiar 15 minutos”.
+
+        Si aun así ya no te sirve, puedes eliminarlo desde el apartado de hábitos en HabitMind.
+
+  utter_crisis_autolesion:
+  - text: |
+      Lamento mucho que te sientas así. No quiero que enfrentes esto en soledad.
+
+      Si sientes que podrías hacerte daño ahora mismo, por favor llama al 911 o busca a una persona cercana de confianza en este momento.
+
+      También puedes comunicarte con la Línea de la Vida en México: 800 911 2000.
+
+      Yo puedo acompañarte con palabras de apoyo, pero esto es importante: no soy un servicio de emergencia ni sustituyo a un profesional de salud mental. Lo más seguro ahora es hablar con alguien real que pueda ayudarte de inmediato.
+
+      Mientras buscas ayuda, intenta hacer esto:
+      1. Aléjate de cualquier objeto con el que puedas hacerte daño.
+      2. Escribe o llama a alguien de confianza.
+      3. Quédate en un lugar acompañado o visible.
+      4. Respira lento y concéntrate solo en pasar los próximos minutos.
+
+      Tu vida importa. Pide ayuda ahora, aunque sientas que no puedes explicarlo perfecto.
+
+actions: []
+
 
 session_config:
   session_expiration_time: 60

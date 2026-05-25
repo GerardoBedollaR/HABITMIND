@@ -1,25 +1,18 @@
-<?php // partials/header_app.php ?>
-<header class="hm-header">
-  <div class="hm-header-inner">
-    <div class="hm-logo">
-      <div class="hm-logo-icon">🧠</div>
-      <div class="hm-logo-text-main">HABITMIND</div>
-    </div>
+<header class="hm-header-app">
+  <div class="hm-header-app-left">
+    <img src="assets/img/logo.png" alt="HabitMind Logo" class="hm-logo-img">
+    <div class="hm-logo-text">HABITMIND</div>
+  </div>
 
-    <nav class="hm-nav">
-      <a href="dashboard.php">Inicio</a>
-      <a href="dashboard.php#contacto">Contacto</a>
-      <a href="dashboard.php#beneficios">Beneficios</a>
-    </nav>
+ <nav class="hm-header-nav">
+    <a href="dashboard.php" class="<?= basename($_SERVER['PHP_SELF']) === 'dashboard.php' ? 'active' : '' ?>">Inicio</a>
+    <a href="registro_hoy.php" class="<?= basename($_SERVER['PHP_SELF']) === 'registro_hoy.php' ? 'active' : '' ?>">Asistente</a>
+    <a href="progreso.php" class="<?= basename($_SERVER['PHP_SELF']) === 'progreso.php' ? 'active' : '' ?>">Progreso</a>
+  </nav>
 
-    <div class="hm-nav-cta">
-      <a href="dashboard.php" class="hm-btn-outline">Configuración ⚙️</a>
-      <!-- Botón rojo de salir -->
-    <a href="logout.php" class="hm-btn hm-btn-logout">Salir</a>
-
-
-
-    </div>
+  <div class="hm-header-app-right">
+    <form action="logout.php" method="post" style="margin:0;">
+      <button type="submit" class="hm-btn-logout">Salir</button>
+    </form>
   </div>
 </header>
-

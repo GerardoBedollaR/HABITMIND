@@ -1,130 +1,560 @@
 version: "3.1"
 
 nlu:
-- intent: greet
-  examples: |
-    - hola
-    - holaaa
-    - buenas
-    - buenos días
-    - buenas tardes
-    - buenas noches
-    - qué onda
-    - hey
-    - hola bot
-    - hola habitmind
-    - hola asistente
+  - intent: saludo
+    examples: |
+      - hola
+      - hola buen día
+      - buenos días
+      - buenas tardes
+      - buenas noches
+      - qué tal
+      - qué onda
+      - hey
+      - hola bot
+      - hola HabitMind
+      - necesito ayuda
+      - quiero empezar
+      - comencemos
+      - vamos a empezar
+      - puedes ayudarme
 
-- intent: goodbye
-  examples: |
-    - adiós
-    - hasta luego
-    - nos vemos
-    - bye
-    - gracias, eso es todo
-    - luego hablamos
-    - ya terminé, gracias
+  - intent: despedida
+    examples: |
+      - adiós
+      - hasta luego
+      - nos vemos
+      - bye
+      - gracias, me voy
+      - eso sería todo
+      - hasta pronto
+      - nos vemos después
+      - cerrar conversación
+      - ya me voy
+      - terminamos
+      - por ahora es todo
+      - luego regreso
+      - hasta mañana
 
-- intent: affirm
-  examples: |
-    - sí
-    - claro
-    - por supuesto
-    - me parece bien
-    - suena bien
-    - ok
-    - de acuerdo
+  - intent: agradecimiento
+    examples: |
+      - gracias
+      - muchas gracias
+      - te agradezco
+      - gracias por ayudarme
+      - perfecto gracias
+      - excelente gracias
+      - va gracias
+      - ok gracias
+      - mil gracias
+      - gracias HabitMind
+      - me ayudaste mucho
+      - gracias por el consejo
 
-- intent: deny
-  examples: |
-    - no
-    - nah
-    - mejor no
-    - todavía no
-    - no quiero
-    - creo que no
+  - intent: afirmar
+    examples: |
+      - sí
+      - si
+      - claro
+      - correcto
+      - exacto
+      - así es
+      - de acuerdo
+      - ok
+      - va
+      - perfecto
+      - está bien
+      - me parece bien
+      - quiero continuar
+      - continuemos
+      - adelante
+      - confirmo
+      - eso quiero
 
-- intent: mood_great
-  examples: |
-    - me siento muy bien
-    - ando motivado
-    - estoy feliz
-    - todo va muy bien
-    - hoy estoy con mucha energía
+  - intent: negar
+    examples: |
+      - no
+      - nel
+      - negativo
+      - no quiero
+      - no gracias
+      - ahora no
+      - todavía no
+      - no por ahora
+      - mejor no
+      - cancelar
+      - cancela eso
+      - no deseo continuar
+      - no es correcto
+      - eso no
+      - cambiar de opción
 
-- intent: mood_unhappy
-  examples: |
-    - me siento mal
-    - ando desmotivado
-    - estoy triste
-    - hoy no tengo ganas de nada
-    - siento que no avanzo
+  - intent: bot_challenge
+    examples: |
+      - eres un bot
+      - eres humano
+      - quién eres
+      - qué eres
+      - estoy hablando con una persona
+      - eres una inteligencia artificial
+      - eres real
+      - eres el asistente
+      - qué puedes hacer
+      - eres HabitMind
+      - qué tipo de asistente eres
 
-- intent: ask_habit_help
-  examples: |
-    - quiero crear un nuevo hábito
-    - ayúdame a crear un hábito
-    - quiero mejorar mis hábitos
-    - quiero empezar a ser más constante
-    - quiero organizar mis hábitos
-    - no sé cómo empezar un hábito
-    - quiero trabajar en mis hábitos
+  - intent: pedir_ayuda
+    examples: |
+      - ayúdame
+      - necesito ayuda con mis hábitos
+      - qué puedo hacer aquí
+      - dime qué puedes hacer
+      - necesito orientación
+      - quiero que me guíes
+      - explícame cómo funciona
+      - cómo me puedes ayudar
+      - qué opciones tengo
+      - no sé qué hacer
+      - quiero mejorar mis hábitos
+      - quiero usar HabitMind
+      - ayúdame a organizar mis hábitos
+      - necesito apoyo para mis hábitos
 
-- intent: provide_habit_info
-  examples: |
-    - quiero crear un hábito para [leer](habit_name)
-    - quiero empezar a [leer libros](habit_name)
-    - me gustaría [hacer ejercicio](habit_name)
-    - quiero formar el hábito de [tomar más agua](habit_name)
-    - quiero empezar a [estudiar inglés](habit_name) diario
-    - quiero crear el hábito de [meditar](habit_name)
-    - quiero [dejar de usar el celular](habit_name) en la noche
-    - quiero hacer el hábito de [salir a caminar](habit_name)
+  - intent: pedir_motivacion
+    examples: |
+      - necesito motivación
+      - dame motivación
+      - motívame
+      - no tengo ganas
+      - necesito ánimo
+      - dame una frase motivadora
+      - quiero sentirme motivado
+      - me siento desanimado
+      - ayúdame a no rendirme
+      - quiero rendirme
+      - ya no tengo motivación
+      - necesito seguir adelante
+      - dame un empujón
+      - hoy no me siento motivado
+      - siento que no puedo
 
-- intent: ask_progress
-  examples: |
-    - cómo voy con mis hábitos
-    - siento que no avanzo con mis hábitos
-    - no estoy siendo constante
-    - me estoy atrasando con lo que quiero lograr
-    - quiero mejorar mi progreso
-    - quiero revisar mi progreso
+  - intent: pedir_consejo_habito
+    examples: |
+      - dame un consejo para mejorar mis hábitos
+      - cómo puedo mejorar un hábito
+      - qué consejo me das para ser constante
+      - cómo puedo mantener un hábito
+      - cómo hago para no abandonar
+      - qué puedo hacer para ser más disciplinado
+      - quiero un consejo de hábitos
+      - cómo puedo crear una rutina
+      - cómo puedo cumplir mis hábitos
+      - necesito una estrategia para mis hábitos
+      - cómo puedo ser más constante
+      - cómo puedo empezar un hábito nuevo
+      - qué hago si me cuesta mantener hábitos
+      - dame una recomendación para cumplir mis metas
 
-- intent: bot_challenge
-  examples: |
-    - eres un bot
-    - eres humano
-    - qué eres
-    - quién eres
-    - hablo con una persona real
+  - intent: explicar_habitos_atomicos
+    examples: |
+      - qué son los hábitos atómicos
+      - explícame hábitos atómicos
+      - cómo funcionan los hábitos atómicos
+      - qué significa hábito atómico
+      - explícame la teoría de hábitos atómicos
+      - cómo se forman los hábitos
+      - qué es hacer un hábito pequeño
+      - cómo puedo aplicar hábitos atómicos
+      - qué dice hábitos atómicos
+      - dime la idea principal de hábitos atómicos
+      - cómo se relaciona HabitMind con hábitos atómicos
+      - explícame el método de hábitos atómicos
 
-- intent: nlu_fallback
-  examples: |
-    - asdasd asdasd
-    - qwe qwe qwe
-    - texto sin sentido
+  - intent: iniciar_registro_habito
+    examples: |
+      - quiero registrar un hábito
+      - quiero agregar un hábito
+      - agregar hábito
+      - registrar hábito
+      - crear hábito
+      - nuevo hábito
+      - quiero crear un nuevo hábito
+      - ayúdame a registrar un hábito
+      - quiero añadir un hábito
+      - vamos a registrar un hábito
+      - deseo agregar un hábito nuevo
+      - necesito guardar un hábito
+      - quiero empezar con un hábito
+      - registra un nuevo hábito
+      - agregar nuevo hábito
+      - quiero registrar [tomar agua](habit_name)
+      - quiero agregar [leer](habit_name)
+      - quiero crear el hábito de [hacer ejercicio](habit_name)
+      - registra el hábito [estudiar programación](habit_name)
+      - quiero añadir [caminar](habit_name) como hábito
+      - quiero registrar [dormir temprano](habit_name) en [salud](habit_category)
+      - quiero agregar [leer 10 minutos](habit_name) en [productividad](habit_category)
+      - quiero registrar [estudiar redes](habit_name) para [estudio](habit_category)
 
-- intent: crear_habito
-  examples: |
-    - quiero crear el hábito de leer
-    - quiero crear el habito de leer
-    - quiero crear el hábito de meditar
-    - quiero crear el habito de meditar
-    - quiero crear el hábito de hacer ejercicio
-    - quiero crear el habito de beber agua
-    - quiero crear el hábito de estudiar
-    - quiero crear el hábito de correr
-    - quiero crear el habito de dormir temprano
-    - crear el hábito de leer
-    - crear el habito de meditar
-    - crea el hábito de tomar agua
-    - crea el habito de estudiar redes
-    - agrega el hábito de leer
-    - agrega el habito de meditar
-    - añade el hábito de comer saludable
-    - añade el habito de caminar
-    - nuevo hábito de leer
-    - nuevo habito de meditar
-    - quiero agregar leer
-    - quiero agregar meditar
-    - quiero añadir estudiar
+  - intent: registrar_habito_hoy
+    examples: |
+      - quiero registrar mi hábito de hoy
+      - quiero marcar mi hábito como realizado
+      - ya hice mi hábito
+      - ya cumplí mi hábito
+      - registrar hábito de hoy
+      - marcar hábito de hoy
+      - cumplí con mi hábito
+      - quiero registrar que ya lo hice
+      - hoy sí cumplí
+      - hoy realicé mi hábito
+      - quiero guardar mi avance de hoy
+      - marca mi hábito como completado
+      - registra que cumplí hoy
+      - ya terminé mi hábito
+      - quiero registrar [tomar agua](habit_name) hoy
+      - hoy hice [ejercicio](habit_name)
+      - ya cumplí [leer](habit_name)
+      - registra [caminar](habit_name) como realizado
+      - completé [estudiar](habit_name)
+      - hoy terminé [meditar](habit_name)
+      - hice [dormir temprano](habit_name) [hoy](date)
+      - cumplí [tomar agua](habit_name) [hoy](date)
+
+  - intent: consultar_habitos
+    examples: |
+      - quiero ver mis hábitos
+      - mostrar mis hábitos
+      - consulta mis hábitos
+      - cuáles son mis hábitos
+      - qué hábitos tengo registrados
+      - lista de hábitos
+      - enséñame mis hábitos
+      - quiero consultar mis hábitos
+      - ver hábitos registrados
+      - muéstrame mis hábitos actuales
+      - revisar mis hábitos
+      - qué hábitos estoy siguiendo
+      - dime mis hábitos
+      - quiero ver la lista de hábitos
+
+  - intent: consultar_progreso
+    examples: |
+      - quiero ver mi progreso
+      - mostrar progreso
+      - consulta mi progreso
+      - cómo voy con mis hábitos
+      - quiero revisar mi avance
+      - enséñame mi avance
+      - qué progreso tengo
+      - cómo va mi constancia
+      - quiero ver mis estadísticas
+      - revisar progreso
+      - ver avance de hábitos
+      - cómo he mejorado
+      - dime mi progreso
+      - quiero consultar mi historial
+      - quiero ver mi racha
+      - cuántos días llevo cumpliendo
+      - cómo voy con [tomar agua](habit_name)
+      - muéstrame el progreso de [leer](habit_name)
+      - quiero ver el avance de [ejercicio](habit_name)
+
+  - intent: modificar_habito
+    examples: |
+      - quiero modificar un hábito
+      - cambiar hábito
+      - editar hábito
+      - actualizar hábito
+      - quiero cambiar un hábito registrado
+      - necesito modificar mi hábito
+      - quiero ajustar un hábito
+      - cambia la frecuencia de un hábito
+      - quiero editar [tomar agua](habit_name)
+      - modifica [leer](habit_name)
+      - actualiza el hábito [hacer ejercicio](habit_name)
+      - cambia [caminar](habit_name)
+      - quiero cambiar [estudiar](habit_name) a [diario](habit_frequency)
+      - quiero modificar la categoría de [leer](habit_name)
+      - quiero ajustar la frecuencia de [meditar](habit_name)
+
+  - intent: eliminar_habito
+    examples: |
+      - quiero eliminar un hábito
+      - borrar hábito
+      - eliminar hábito
+      - quitar hábito
+      - borra un hábito
+      - quiero quitar un hábito de mi lista
+      - elimina [tomar agua](habit_name)
+      - borra [leer](habit_name)
+      - quiero eliminar [hacer ejercicio](habit_name)
+      - quita [caminar](habit_name)
+      - ya no quiero seguir [estudiar](habit_name)
+      - elimina el hábito [meditar](habit_name)
+      - quiero borrar el hábito [dormir temprano](habit_name)
+      - remueve [leer 10 minutos](habit_name)
+
+  - intent: estado_animo
+    examples: |
+      - me siento bien
+      - me siento mal
+      - estoy feliz
+      - estoy triste
+      - estoy cansado
+      - estoy estresado
+      - me siento motivado
+      - me siento desmotivado
+      - estoy tranquilo
+      - estoy ansioso
+      - hoy me siento con energía
+      - hoy estoy agotado
+      - no me siento bien
+      - estoy de buen ánimo
+      - estoy de mal ánimo
+      - me siento [motivado](mood)
+      - me siento [cansado](mood)
+      - estoy [estresado](mood)
+      - estoy [desanimado](mood)
+      - hoy estoy [feliz](mood)
+      - hoy me siento [ansioso](mood)
+
+  - intent: dificultad_habito
+    examples: |
+      - se me está haciendo difícil mi hábito
+      - me cuesta cumplir mi hábito
+      - no puedo cumplir mi hábito
+      - mi hábito es muy difícil
+      - siento que es demasiado
+      - no logro ser constante
+      - se me complica hacerlo diario
+      - me está costando mantenerlo
+      - no puedo con este hábito
+      - me cuesta mucho [hacer ejercicio](habit_name)
+      - se me dificulta [leer](habit_name)
+      - no he podido cumplir [tomar agua](habit_name)
+      - [estudiar](habit_name) se me hace pesado
+      - se me hace difícil [meditar](habit_name)
+      - no logro cumplir [dormir temprano](habit_name)
+
+  - intent: falta_motivacion
+    examples: |
+      - no tengo motivación
+      - perdí la motivación
+      - ya no quiero seguir
+      - me da flojera
+      - no tengo ganas de hacerlo
+      - me siento sin energía
+      - ya no me interesa mi hábito
+      - no encuentro motivación
+      - estoy perdiendo la constancia
+      - no quiero hacer mi hábito hoy
+      - no tengo ganas de [hacer ejercicio](habit_name)
+      - me da flojera [estudiar](habit_name)
+      - perdí la motivación para [leer](habit_name)
+      - no quiero seguir con [meditar](habit_name)
+      - ya no me motiva [caminar](habit_name)
+
+  - intent: recaida_habito
+    examples: |
+      - fallé mi hábito
+      - no cumplí mi hábito
+      - ayer no hice mi hábito
+      - rompí mi racha
+      - dejé de hacerlo
+      - llevo días sin cumplir
+      - no pude hacerlo hoy
+      - olvidé hacer mi hábito
+      - fallé otra vez
+      - me salté mi hábito
+      - no cumplí [tomar agua](habit_name)
+      - fallé con [leer](habit_name)
+      - no hice [ejercicio](habit_name)
+      - rompí mi racha de [estudiar](habit_name)
+      - olvidé [meditar](habit_name)
+      - no pude hacer [caminar](habit_name) [hoy](date)
+      - no cumplí [dormir temprano](habit_name) [ayer](date)
+
+  - intent: terminar_conversacion
+    examples: |
+      - terminar conversación
+      - finalizar conversación
+      - ya terminamos
+      - eso es todo
+      - ya acabé
+      - finalicemos
+      - quiero terminar
+      - podemos terminar
+      - hasta aquí
+      - cerrar el chat
+      - termina la conversación
+      - gracias, eso era todo
+      - ya no necesito más ayuda
+      - terminamos por ahora
+      - quiero salir
+
+  - intent: out_of_scope
+    examples: |
+      - cuál es la capital de Francia
+      - resuelve una integral
+      - cuéntame un chiste
+      - quiero hablar de fútbol
+      - dame una receta de comida
+      - cómo hackeo una cuenta
+      - quiero comprar un celular
+      - dime el clima
+      - ayúdame con matemáticas
+      - quiero jugar
+      - háblame de películas
+      - quién ganó el partido
+      - necesito una tarea de otra materia
+      - cuánto cuesta una computadora
+      - dame información de política
+
+  - lookup: habit_category
+    examples: |
+      - salud
+      - estudio
+      - productividad
+      - ejercicio
+      - bienestar
+      - alimentación
+      - sueño
+      - finanzas
+      - lectura
+      - trabajo
+      - disciplina
+      - organización
+      - higiene
+      - meditación
+      - deporte
+
+  - lookup: habit_frequency
+    examples: |
+      - diario
+      - todos los días
+      - cada día
+      - lunes a viernes
+      - fines de semana
+      - cada semana
+      - semanal
+      - 3 veces por semana
+      - tres veces por semana
+      - 2 veces por semana
+      - dos veces por semana
+      - una vez por semana
+      - cada mes
+      - mensual
+      - de lunes a viernes
+      - cada tercer día
+
+  - lookup: mood
+    examples: |
+      - feliz
+      - triste
+      - motivado
+      - desmotivado
+      - cansado
+      - estresado
+      - tranquilo
+      - ansioso
+      - agotado
+      - emocionado
+      - preocupado
+      - frustrado
+      - satisfecho
+      - bien
+      - mal
+
+  - lookup: obstacle
+    examples: |
+      - falta de tiempo
+      - cansancio
+      - flojera
+      - estrés
+      - olvido
+      - distracciones
+      - falta de motivación
+      - trabajo
+      - escuela
+      - sueño
+      - problemas personales
+      - mala organización
+      - no tuve energía
+      - se me olvidó
+      - estaba ocupado
+
+  - synonym: salud
+    examples: |
+      - bienestar físico
+      - vida saludable
+      - cuidado personal
+
+  - synonym: estudio
+    examples: |
+      - escuela
+      - universidad
+      - tareas
+      - aprendizaje
+      - académico
+
+  - synonym: ejercicio
+    examples: |
+      - deporte
+      - actividad física
+      - entrenar
+      - gimnasio
+
+  - synonym: productividad
+    examples: |
+      - organización
+      - disciplina
+      - trabajo
+      - enfoque
+
+  - synonym: diario
+    examples: |
+      - todos los días
+      - cada día
+      - diariamente
+      - a diario
+
+  - synonym: cansado
+    examples: |
+      - agotado
+      - sin energía
+      - fatigado
+
+  - synonym: desmotivado
+    examples: |
+      - sin motivación
+      - sin ganas
+      - desanimado
+
+  - intent: crisis_autolesion
+    examples: |
+      - me quiero matar
+      - quiero matarme
+      - me quiero suicidar
+      - quiero suicidarme
+      - ya no quiero vivir
+      - no quiero seguir viviendo
+      - quiero acabar con mi vida
+      - quiero quitarme la vida
+      - siento que no vale la pena vivir
+      - ya no puedo más
+      - no aguanto más
+      - quiero desaparecer
+      - quisiera no existir
+      - estoy pensando en hacerme daño
+      - tengo ganas de hacerme daño
+      - me voy a hacer daño
+      - siento que sería mejor morirme
+      - nadie me necesita
+      - no tengo razones para vivir
+      - estoy pensando en suicidarme
+      - quiero terminar con todo
+      - ya no le veo sentido a nada
+      - me siento en peligro conmigo mismo
+      - tengo pensamientos suicidas
+      - me dan ganas de no seguir

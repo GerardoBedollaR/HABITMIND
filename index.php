@@ -144,8 +144,9 @@
   </section>
 
 </main>
-
+<section id="contacto" class="hm-contact">
+  
 <?php @include 'partials/footer.php'; ?>
-
+</section>
 </body>
 </html>
